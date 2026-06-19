@@ -66,7 +66,8 @@ export default function HomePage() {
 
     const data = new FormData();
     data.append("image", file);
-
+    data.append("user_id", user.id);
+    
     try {
       const res = await fetch("/api/analyze", { method: "POST", body: data });
       const json = await res.json();

@@ -5,6 +5,7 @@ export async function POST(req: NextRequest) {
   try {
     const form = await req.formData();
     const image = form.get("image") as File | null;
+    const userId = form.get("user_id") as string | null;
 
     if (!image) {
       return NextResponse.json({ analysis: "لم يتم رفع صورة." }, { status: 400 });
@@ -18,9 +19,7 @@ export async function POST(req: NextRequest) {
     const apiKey = process.env.OPENAI_API_KEY;
 
     if (!apiKey) {
-      return NextResponse.json({
-        analysis:
-`نسخة تجريبية جاهزة للنشر.
+      const demoAnalysis = `نسخة تجريبية جاهزة للنشر.
 
 أضف OPENAI_API_KEY في إعدادات Vercel حتى يعمل التحليل الحقيقي.
 
@@ -38,8 +37,11 @@ export async function POST(req: NextRequest) {
 فرصة السكالب
 فرصة السوينغ
 الرؤية المؤسساتية
-درجة النموذج`
-      });
+درجة النموذج`;
+
+      await saveAnalysis(userId, demoAnalysis, "demo", "unknown");
+
+      return NextResponse.json({ analysis: demoAnalysis });
     }
 
     const client = new OpenAI({ apiKey });
@@ -78,20 +80,77 @@ export async function POST(req: NextRequest) {
 
     const response = await client.chat.completions.create({
       model: "gpt-4o-mini",
-      messages: [{
-        role: "user",
-        content: [
-          { type: "text", text: prompt },
-          { type: "image_url", image_url: { url: `data:${mime};base64,${base64}` } }
-        ]
-      }],
-      temperature: 0.25
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text: prompt },
+            {
+              type: "image_url",
+              image_url: { url: `data:${mime};base64,${base64}` },
+            },
+          ],
+        },
+      ],
+      temperature: 0.25,
     });
 
-    return NextResponse.json({
-      analysis: response.choices[0]?.message?.content || "لم يتم توليد تحليل."
-    });
+    const analysis =
+      response.choices[0]?.message?.content || "لم يتم توليد تحليل.";
+
+    const symbol = extractField(analysis, "الأصل والفريم") || "unknown";
+    const timeframe = extractTimeframe(analysis) || "unknown";
+
+    await saveAnalysis(userId, analysis, symbol, timeframe);
+
+    return NextResponse.json({ analysis });
   } catch (e) {
-    return NextResponse.json({ analysis: "حدث خطأ أثناء التحليل." }, { status: 500 });
+    return NextResponse.json(
+      { analysis: "حدث خطأ أثناء التحليل." },
+      { status: 500 }
+    );
   }
+}
+
+function extractField(text: string, label: string) {
+  const lines = text.split("\n");
+  const index = lines.findIndex((line) => line.includes(label));
+  if (index === -1) return "";
+  return lines[index + 1]?.trim() || "";
+}
+
+function extractTimeframe(text: string) {
+  const match = text.match(/\b(1M|5M|15M|30M|1H|4H|D1|Daily|H4|M1|M5|M15)\b/i);
+  return match?.[0] || "";
+}
+
+async function saveAnalysis(
+  userId: string | null,
+  result: string,
+  symbol: string,
+  timeframe: string
+) {
+  if (!userId) return;
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseKey) return;
+
+  await fetch(`${supabaseUrl}/rest/v1/analyses`, {
+    method: "POST",
+    headers: {
+      apikey: supabaseKey,
+      Authorization: `Bearer ${supabaseKey}`,
+      "Content-Type": "application/json",
+      Prefer: "return=minimal",
+    },
+    body: JSON.stringify({
+      user_id: userId,
+      analysis_type: "chart",
+      symbol,
+      timeframe,
+      result,
+    }),
+  });
 }

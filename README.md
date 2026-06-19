@@ -1,4 +1,8 @@
-import { createClient } from "@supabase/supabase-js";
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || "";
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || "";
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+# Flow Academy AI V3
+
+نسخة تحتوي Google Login عبر Supabase.
+
+Vercel Environment Variables:
+NEXT_PUBLIC_SUPABASE_URL
+NEXT_PUBLIC_SUPABASE_ANON_KEY
+OPENAI_API_KEY اختياري حالياً

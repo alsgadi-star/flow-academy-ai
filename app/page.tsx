@@ -33,34 +33,30 @@ export default function HomePage() {
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
 
   const [newSignal, setNewSignal] = useState({
-  symbol: "",
-  direction: "BUY",
-  entry_price: "",
-  sl: "",
-  tp1: "",
-  tp2: "",
-  tp3: "",
-  status: "active",
-  signal_type: "scalp",
-  access: "free",
-});
+    symbol: "",
+    direction: "BUY",
+    entry_price: "",
+    sl: "",
+    tp1: "",
+    tp2: "",
+    tp3: "",
+    status: "active",
+    signal_type: "scalp",
+    access: "free",
+  });
 
-const [academyTab, setAcademyTab] = useState("news");
-const [academyPosts, setAcademyPosts] = useState<any[]>([]);
+  const [newsItem, setNewsItem] = useState({
+    title: "",
+    content: "",
+    impact: "medium",
+  });
 
-const [academyItem, setAcademyItem] = useState({
-  title: "",
-  content: "",
-  type: "article",
-  access: "free",
-});
-  
-const [newsItem, setNewsItem] = useState({
-  title: "",
-  content: "",
-  impact: "medium",
-});
-
+  const [academyItem, setAcademyItem] = useState({
+    title: "",
+    content: "",
+    type: "article",
+    access: "free",
+  });
  useEffect(() => {
   supabase.auth.getUser().then(({ data }) => {
     setUser(data.user);

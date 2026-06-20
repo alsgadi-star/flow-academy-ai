@@ -188,70 +188,40 @@ loadSignals();
       <h3>الإشارات</h3>
     </div>
 
-    <div
-      style={{
-        background: "#0f172a",
-        borderRadius: "18px",
-        padding: "16px",
-        marginBottom: "12px",
-        border: "1px solid #1e293b",
-      }}
-    >
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3 style={{ color: "#22c55e" }}>XAUUSD BUY</h3>
-        <span
+    {signals.length === 0 ? (
+      <div className="result">
+        لا توجد إشارات حالياً
+      </div>
+    ) : (
+      signals.map((signal) => (
+        <div
+          key={signal.id}
           style={{
-            background: "#14532d",
-            color: "#22c55e",
-            padding: "4px 10px",
-            borderRadius: "10px",
-            fontSize: "12px",
+            background: "#08162e",
+            border: "1px solid #17365d",
+            borderRadius: "18px",
+            padding: "20px",
+            marginBottom: "16px",
           }}
         >
-          نشطة
-        </span>
-      </div>
+          <h2
+            style={{
+              color: signal.direction === "BUY" ? "#00ff88" : "#ff4d4d",
+              textAlign: "center",
+              marginBottom: "15px",
+            }}
+          >
+            {signal.symbol} {signal.direction}
+          </h2>
 
-      <div style={{ marginTop: "12px" }}>
-        <p>الدخول: 4148</p>
-        <p>وقف الخسارة: 4134</p>
-        <p>TP1: 4152</p>
-        <p>TP2: 4156</p>
-        <p>TP3: 4160</p>
-      </div>
-    </div>
-
-    <div
-      style={{
-        background: "#0f172a",
-        borderRadius: "18px",
-        padding: "16px",
-        border: "1px solid #1e293b",
-      }}
-    >
-      <div style={{ display: "flex", justifyContent: "space-between" }}>
-        <h3 style={{ color: "#ef4444" }}>GBPUSD SELL</h3>
-        <span
-          style={{
-            background: "#7f1d1d",
-            color: "#f87171",
-            padding: "4px 10px",
-            borderRadius: "10px",
-            fontSize: "12px",
-          }}
-        >
-          مغلقة
-        </span>
-      </div>
-
-      <div style={{ marginTop: "12px" }}>
-        <p>الدخول: 1.3560</p>
-        <p>وقف الخسارة: 1.3600</p>
-        <p>TP1: 1.3520</p>
-        <p>TP2: 1.3480</p>
-        <p>TP3: 1.3440</p>
-      </div>
-    </div>
+          <p>الدخول: {signal.entry}</p>
+          <p>وقف الخسارة: {signal.sl}</p>
+          <p>TP1: {signal.tp1}</p>
+          <p>TP2: {signal.tp2}</p>
+          <p>TP3: {signal.tp3}</p>
+        </div>
+      ))
+    )}
   </section>
 )}
 

@@ -529,25 +529,46 @@ return (
   )
 ) : (
   academyPosts
-    .filter((post) => post.type === academyTab)
-    .map((post) => (
+  .filter((post) => post.type === academyTab)
+  .map((post) => {
+    const locked = post.access === "vip" && !isVIP;
+
+    return (
       <div
         key={post.id}
         className="result"
-        onClick={() => setSelectedPost(post)}
-        style={{ cursor: "pointer" }}
+        onClick={() => {
+          if (!locked) setSelectedPost(post);
+        }}
+        style={{ cursor: locked ? "default" : "pointer" }}
       >
         <h4>{post.title}</h4>
-        <p>{post.excerpt || post.content}</p>
 
-        {post.access === "vip" && (
-          <span style={{ color: "#facc15" }}>
-            VIP
-          </span>
+        {locked ? (
+          <>
+            <p>🔒 محتوى VIP</p>
+            <button
+              className="btn"
+              onClick={(e) => {
+                e.stopPropagation();
+                setTab("plans");
+              }}
+            >
+              ترقية الحساب
+            </button>
+          </>
+        ) : (
+          <>
+            <p>{post.excerpt || post.content}</p>
+
+            {post.access === "vip" && (
+              <span style={{ color: "#facc15" }}>VIP</span>
+            )}
+          </>
         )}
       </div>
-    ))
-)}
+    );
+  })
     </section>
   )
 )}

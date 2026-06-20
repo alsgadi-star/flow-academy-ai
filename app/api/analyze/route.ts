@@ -114,7 +114,7 @@ export async function POST(req: NextRequest) {
     { status: 500 }
   );
 }
-
+}
 function extractField(text: string, label: string) {
   const lines = text.split("\n");
   const index = lines.findIndex((line) => line.includes(label));

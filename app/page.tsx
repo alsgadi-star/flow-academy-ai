@@ -414,13 +414,44 @@ return (
       <h3>الأكاديمية</h3>
     </div>
 
-    <div style={{ display: "flex", gap: "8px", overflowX: "auto", marginBottom: "16px" }}>
-      <button className="btn-dark" onClick={() => setAcademyTab("news")}>الأخبار</button>
-      <button className="btn-dark" onClick={() => setAcademyTab("article")}>المقالات</button>
-      <button className="btn-dark" onClick={() => setAcademyTab("daily")}>التحليل اليومي</button>
-      <button className="btn-dark" onClick={() => setAcademyTab("lesson")}>ICT و CRT</button>
-      <button className="btn-dark" onClick={() => setAcademyTab("webinar")}>الويبينارات</button>
-    </div>
+    <div
+  style={{
+    display: "flex",
+    gap: "10px",
+    overflowX: "auto",
+    marginBottom: "18px",
+    paddingBottom: "6px",
+  }}
+>
+  {[
+    { id: "news", label: "الأخبار" },
+    { id: "article", label: "المقالات" },
+    { id: "daily", label: "التحليل اليومي" },
+    { id: "lesson", label: "ICT و CRT" },
+    { id: "webinar", label: "الويبينارات" },
+  ].map((item) => (
+    <button
+      key={item.id}
+      onClick={() => setAcademyTab(item.id)}
+      style={{
+        border: "1px solid #17365d",
+        background: academyTab === item.id ? "#0ea5e9" : "#08162e",
+        color: academyTab === item.id ? "#ffffff" : "#cbd5e1",
+        borderRadius: "999px",
+        padding: "10px 14px",
+        fontSize: "13px",
+        whiteSpace: "nowrap",
+        cursor: "pointer",
+        boxShadow:
+          academyTab === item.id
+            ? "0 0 20px rgba(14,165,233,0.35)"
+            : "none",
+      }}
+    >
+      {item.label}
+    </button>
+  ))}
+</div>
 
     {academyTab === "news" ? (
       news.length === 0 ? (

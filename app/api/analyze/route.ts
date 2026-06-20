@@ -104,12 +104,15 @@ export async function POST(req: NextRequest) {
     await saveAnalysis(userId, analysis, symbol, timeframe);
 
     return NextResponse.json({ analysis });
-  } catch (e) {
-    return NextResponse.json(
-      { analysis: "حدث خطأ أثناء التحليل." },
-      { status: 500 }
-    );
-  }
+  } catch (e: any) {
+  console.error("FULL ERROR:", e);
+
+  return NextResponse.json(
+    {
+      analysis: String(e?.message || e)
+    },
+    { status: 500 }
+  );
 }
 
 function extractField(text: string, label: string) {

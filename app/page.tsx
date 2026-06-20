@@ -407,7 +407,7 @@ return (
       )}
 
       {tab === "academy" && (
-   selectedPost ? (
+  selectedPost ? (
     <section className="card">
       <button
         className="btn-dark"
@@ -416,6 +416,7 @@ return (
       >
         ← رجوع
       </button>
+
       <h2>{selectedPost.title}</h2>
 
       {selectedPost.access === "vip" && (
@@ -456,15 +457,16 @@ return (
         </a>
       )}
     </section>
-  );
-}
-  <section className="card">
-    <div className="card-title">
-      <div className="icon">
-        <GraduationCap size={23} />
+  ) : (
+    <section className="card">
+      <div className="card-title">
+        <div className="icon">
+          <GraduationCap size={23} />
+        </div>
+        <h3>الأكاديمية</h3>
       </div>
-      <h3>الأكاديمية</h3>
-    </div>
+
+      {/* خليه هنا كل محتوى الأكاديمية الحالي */}
 
    <div
   style={{

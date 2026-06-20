@@ -44,39 +44,40 @@ const [newsItem, setNewsItem] = useState({
   impact: "medium",
 });
 
-  useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      setUser(data.user);
-      setLoadingAuth(false);
-    });
+ useEffect(() => {
+  supabase.auth.getUser().then(({ data }) => {
+    setUser(data.user);
+    setLoadingAuth(false);
+  });
 
-    const { data } = supabase.auth.onAuthStateChange((_event, session) => {
-      setUser(session?.user ?? null);
-      setLoadingAuth(false);
-    });
+  const { data } = supabase.auth.onAuthStateChange((_event, session) => {
+    setUser(session?.user ?? null);
+    setLoadingAuth(false);
+  });
 
-    async function loadSignals() {
-      const { data } = await supabase
-        .from("signals")
-        .select("*")
-        .order("created_at", { ascending: false });
+  async function loadSignals() {
+    const { data } = await supabase
+      .from("signals")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-      setSignals(data || []);
-    }
+    setSignals(data || []);
+  }
 
-    async function loadNews() {
-  const { data } = await supabase
-    .from("news")
-    .select("*")
-    .order("created_at", { ascending: false });
+  async function loadNews() {
+    const { data } = await supabase
+      .from("news")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  setNews(data || []);
-}
+    setNews(data || []);
+  }
 
-    loadSignals();
-loadNews();
+  loadSignals();
+  loadNews();
 
-return () => data.subscription.unsubscribe();
+  return () => data.subscription.unsubscribe();
+}, []);
 
   async function loginGoogle() {
     await supabase.auth.signInWithOAuth({

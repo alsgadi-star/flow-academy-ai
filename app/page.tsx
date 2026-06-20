@@ -37,6 +37,12 @@ export default function HomePage() {
   access: "free",
 });
 
+const [newsItem, setNewsItem] = useState({
+  title: "",
+  content: "",
+  impact: "medium",
+});
+
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {
       setUser(data.user);
@@ -113,6 +119,24 @@ export default function HomePage() {
     setResult("تم رفع الصورة. اضغط حلل الآن.");
   }
 
+  async function addNews() {
+  const { error } = await supabase
+    .from("news")
+    .insert([newsItem]);
+
+  if (!error) {
+    alert("تمت إضافة الخبر");
+
+    setNewsItem({
+      title: "",
+      content: "",
+      impact: "medium",
+    });
+  } else {
+    alert(error.message);
+  }
+}
+  
   async function analyze() {
     if (!file) return setResult("ارفع صورة الشارت أولاً.");
 
@@ -433,6 +457,41 @@ return (
   </section>
 )}
 
+    <hr style={{ margin: "20px 0" }} />
+
+<h3>إضافة خبر اقتصادي</h3>
+
+<input
+  placeholder="عنوان الخبر"
+  value={newsItem.title}
+  onChange={(e) =>
+    setNewsItem({ ...newsItem, title: e.target.value })
+  }
+/>
+
+<textarea
+  placeholder="محتوى الخبر"
+  value={newsItem.content}
+  onChange={(e) =>
+    setNewsItem({ ...newsItem, content: e.target.value })
+  }
+/>
+
+<select
+  value={newsItem.impact}
+  onChange={(e) =>
+    setNewsItem({ ...newsItem, impact: e.target.value })
+  }
+>
+  <option value="high">عالي التأثير</option>
+  <option value="medium">متوسط التأثير</option>
+  <option value="low">منخفض التأثير</option>
+</select>
+
+<button className="btn" onClick={addNews}>
+  إضافة خبر
+</button>
+    
       {tab === "plans" && (
         <section className="card">
           <div className="card-title">

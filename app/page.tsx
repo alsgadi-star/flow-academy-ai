@@ -241,7 +241,8 @@ if (!user) {
 }
 
 const isAdmin = user?.email === "alsgadi@gmail.com";
-
+const isVIP = isAdmin;
+  
 return (
   <main className="phone">
       <header className="top">

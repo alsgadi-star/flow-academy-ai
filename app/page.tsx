@@ -135,10 +135,10 @@ export default function HomePage() {
   }
 
   if (loadingAuth) {
-    return <main className="phone">جاري التحميل...</main>;
-  }
+  return <main className="phone">جاري التحميل...</main>;
+}
 
-  if (!user) {
+if (!user) {
   return (
     <main className="phone" style={{ display: "grid", placeItems: "center" }}>
       <section className="card" style={{ textAlign: "center", width: "100%" }}>
@@ -155,9 +155,8 @@ export default function HomePage() {
 
 const isAdmin = user?.email === "alsgadi@gmail.com";
 
-
-  return (
-    <main className="phone">
+return (
+  <main className="phone">
       <header className="top">
         <div className="brand">
           <div className="logo">F</div>

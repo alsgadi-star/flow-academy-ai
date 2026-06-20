@@ -241,6 +241,7 @@ if (!user) {
 }
 
 const isAdmin = user?.email === "alsgadi@gmail.com";
+  const isVIP = isAdmin;
 
 return (
   <main className="phone">
@@ -531,19 +532,43 @@ return (
       ) : (
         academyPosts
           .filter((post) => post.type === academyTab)
-          .map((post) => (
+          .map((const locked =
+  post.access === "vip" && !isVIP;) => (
             <div
-              key={post.id}
-              className="result"
-              onClick={() => setSelectedPost(post)}
-              style={{ cursor: "pointer" }}
-            >
-              <h4>{post.title}</h4>
-              <p>{post.excerpt || post.content}</p>
-              {post.access === "vip" && (
-                <span style={{ color: "#facc15" }}>VIP</span>
-              )}
-            </div>
+  key={post.id}
+  className="result"
+  style={{ cursor: "pointer" }}
+  onClick={() => {
+    if (!locked) {
+      setSelectedPost(post);
+    }
+  }}
+>
+  <h4>{post.title}</h4>
+
+  {locked ? (
+    <>
+      <p>🔒 محتوى VIP</p>
+
+      <button
+        className="btn"
+        onClick={() => setTab("plans")}
+      >
+        ترقية الحساب
+      </button>
+    </>
+  ) : (
+    <>
+      <p>{post.excerpt || post.content}</p>
+
+      {post.access === "vip" && (
+        <span style={{ color: "#facc15" }}>
+          VIP
+        </span>
+      )}
+    </>
+  )}
+</div>
           ))
       )}
     </section>

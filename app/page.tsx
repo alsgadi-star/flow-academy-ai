@@ -20,6 +20,7 @@ export default function HomePage() {
 
   const [tab, setTab] = useState("home");
   const [academyTab, setAcademyTab] = useState("news");
+  const [selectedPost, setSelectedPost] = useState<any>(null);
 
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");

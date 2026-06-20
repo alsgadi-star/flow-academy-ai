@@ -24,6 +24,7 @@ export default function HomePage() {
   const [result, setResult] = useState("نتيجة التحليل تظهر هنا.");
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState("");
+  const [signals, setSignals] = useState<any[]>([]);
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {

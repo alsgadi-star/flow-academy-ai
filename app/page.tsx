@@ -38,6 +38,16 @@ export default function HomePage() {
   access: "free",
 });
 
+const [academyTab, setAcademyTab] = useState("news");
+const [academyPosts, setAcademyPosts] = useState<any[]>([]);
+
+const [academyItem, setAcademyItem] = useState({
+  title: "",
+  content: "",
+  type: "article",
+  access: "free",
+});
+  
 const [newsItem, setNewsItem] = useState({
   title: "",
   content: "",
@@ -73,8 +83,18 @@ const [newsItem, setNewsItem] = useState({
     setNews(data || []);
   }
 
-  loadSignals();
-  loadNews();
+   async function loadAcademyPosts() {
+  const { data } = await supabase
+    .from("academy_posts")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  setAcademyPosts(data || []);
+}
+
+loadSignals();
+loadNews();
+loadAcademyPosts();
 
   return () => data.subscription.unsubscribe();
 }, []);

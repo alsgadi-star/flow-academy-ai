@@ -504,3 +504,6 @@ return (
     ملفي
   </button>
 </nav>
+       </main>
+  );
+} 

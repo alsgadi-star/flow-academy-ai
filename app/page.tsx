@@ -167,6 +167,32 @@ loadAcademyPosts();
     alert(error.message);
   }
 }
+
+async function addAcademyContent() {
+  const { error } = await supabase
+    .from("academy_posts")
+    .insert([academyItem]);
+
+  if (!error) {
+    alert("تمت إضافة محتوى الأكاديمية");
+
+    const { data } = await supabase
+      .from("academy_posts")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    setAcademyPosts(data || []);
+
+    setAcademyItem({
+      title: "",
+      content: "",
+      type: "article",
+      access: "free",
+    });
+  } else {
+    alert(error.message);
+  }
+}  
   
   async function analyze() {
     if (!file) return setResult("ارفع صورة الشارت أولاً.");

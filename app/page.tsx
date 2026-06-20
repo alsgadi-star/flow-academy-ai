@@ -406,7 +406,7 @@ return (
         </section>
       )}
 
-      {tab === "academy" && (
+{tab === "academy" && (
   selectedPost ? (
     <section className="card">
       <button
@@ -466,138 +466,86 @@ return (
         <h3>الأكاديمية</h3>
       </div>
 
-      {/* خليه هنا كل محتوى الأكاديمية الحالي */}
-
-   <div
-  style={{
-    display: "grid",
-    gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "12px",
-    marginBottom: "18px",
-  }}
->
-  {[
-    {
-      id: "news",
-      icon: "📰",
-      label: "الأخبار",
-      desc: "أحدث الأخبار",
-    },
-    {
-      id: "article",
-      icon: "📚",
-      label: "المقالات",
-      desc: "مقالات اقتصادية",
-    },
-    {
-      id: "daily",
-      icon: "📈",
-      label: "التحليل",
-      desc: "تحليل يومي",
-    },
-    {
-      id: "lesson",
-      icon: "🎓",
-      label: "ICT",
-      desc: "دروس CRT و ICT",
-    },
-    {
-      id: "webinar",
-      icon: "🎥",
-      label: "ويبينار",
-      desc: "جلسات مباشرة",
-    },
-  ].map((item) => (
-    <button
-      key={item.id}
-      onClick={() => setAcademyTab(item.id)}
-      style={{
-        background:
-          academyTab === item.id
-            ? "linear-gradient(135deg,#0ea5e9,#0369a1)"
-            : "linear-gradient(180deg,#08162e,#061124)",
-        border:
-          academyTab === item.id
-            ? "1px solid #38bdf8"
-            : "1px solid #17365d",
-        borderRadius: "18px",
-        padding: "14px 10px",
-        color: "#fff",
-        textAlign: "right",
-        minHeight: "92px",
-        cursor: "pointer",
-        boxShadow:
-          academyTab === item.id
-            ? "0 0 20px rgba(14,165,233,0.35)"
-            : "none",
-      }}
-    >
-      <div style={{ fontSize: "24px", marginBottom: "8px" }}>
-        {item.icon}
-      </div>
-
-      <div style={{ fontSize: "14px", fontWeight: 700 }}>
-        {item.label}
-      </div>
-
-      <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-        {item.desc}
-      </div>
-    </button>
-  ))}
-</div>
-
-    {academyTab === "news" ? (
-      news.length === 0 ? (
-        <div className="result">لا توجد أخبار حالياً</div>
-      ) : (
-        news.map((item) => (
-          <div key={item.id} className="result">
-            <h4>{item.title}</h4>
-            <p>{item.content}</p>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2,1fr)",
+          gap: "12px",
+          marginBottom: "20px",
+        }}
+      >
+        {[
+          { id: "news", icon: "📰", title: "الأخبار", color: "#0ea5e9" },
+          { id: "article", icon: "📚", title: "المقالات", color: "#8b5cf6" },
+          { id: "daily", icon: "📈", title: "التحليل", color: "#22c55e" },
+          { id: "lesson", icon: "🎓", title: "ICT & CRT", color: "#f59e0b" },
+          { id: "webinar", icon: "🎥", title: "الويبينارات", color: "#ef4444" },
+        ].map((item) => (
+          <div
+            key={item.id}
+            onClick={() => setAcademyTab(item.id)}
+            style={{
+              background:
+                academyTab === item.id
+                  ? "linear-gradient(180deg,#0b2345,#08162e)"
+                  : "#08162e",
+              border:
+                academyTab === item.id
+                  ? `1px solid ${item.color}`
+                  : "1px solid #17365d",
+              borderRadius: "18px",
+              padding: "18px",
+              cursor: "pointer",
+              textAlign: "center",
+              boxShadow:
+                academyTab === item.id
+                  ? `0 0 20px ${item.color}40`
+                  : "none",
+            }}
+          >
+            <div style={{ fontSize: "28px", marginBottom: "10px" }}>
+              {item.icon}
+            </div>
+            <div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
+              {item.title}
+            </div>
           </div>
-        ))
-      )
-    ) : (
-      academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
+        ))}
+      </div>
+
+      {academyTab === "news" ? (
+        news.length === 0 ? (
+          <div className="result">لا توجد أخبار حالياً</div>
+        ) : (
+          news.map((item) => (
+            <div key={item.id} className="result">
+              <h4>{item.title}</h4>
+              <p>{item.content}</p>
+            </div>
+          ))
+        )
+      ) : academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
         <div className="result">لا يوجد محتوى حالياً</div>
       ) : (
         academyPosts
           .filter((post) => post.type === academyTab)
           .map((post) => (
-            <div key={post.id} className="result">
-              {post.image_url && (
-                <img
-                  src={post.image_url}
-                  alt={post.title}
-                  className="preview"
-                  style={{ display: "block", marginBottom: "12px" }}
-                />
-              )}
-
+            <div
+              key={post.id}
+              className="result"
+              onClick={() => setSelectedPost(post)}
+              style={{ cursor: "pointer" }}
+            >
               <h4>{post.title}</h4>
               <p>{post.content}</p>
-
-              {post.video_url && (
-                <a
-                  href={post.video_url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="btn-dark"
-                  style={{ display: "block", textAlign: "center", marginTop: "12px" }}
-                >
-                  مشاهدة الفيديو
-                </a>
-              )}
-
               {post.access === "vip" && (
                 <span style={{ color: "#facc15" }}>VIP</span>
               )}
             </div>
           ))
-      )
-    )}
-  </section>
+      )}
+    </section>
+  )
 )}
 
       {tab === "profile" && (

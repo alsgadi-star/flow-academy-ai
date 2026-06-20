@@ -241,7 +241,7 @@ if (!user) {
 }
 
 const isAdmin = user?.email === "alsgadi@gmail.com";
-  const isVIP = isAdmin;
+
 return (
   <main className="phone">
       <header className="top">
@@ -526,53 +526,23 @@ return (
             </div>
           ))
      ) : (
-          academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
-        <div className="result">لا يوجد محتوى حالياً</div>
-      ) : (
   academyPosts
     .filter((post) => post.type === academyTab)
-    .map((post) => {
-      const locked = post.access === "vip" && !isVIP;
+    .map((post) => (
+      <div
+        key={post.id}
+        className="result"
+        onClick={() => setSelectedPost(post)}
+        style={{ cursor: "pointer" }}
+      >
+        <h4>{post.title}</h4>
+        <p>{post.excerpt || post.content}</p>
 
-      return (
-        <div
-          key={post.id}
-          className="result"
-          style={{ cursor: locked ? "default" : "pointer" }}
-          onClick={() => {
-            if (!locked) {
-              setSelectedPost(post);
-            }
-          }}
-        >
-          <h4>{post.title}</h4>
-
-          {locked ? (
-            <>
-              <p>🔒 محتوى VIP</p>
-
-              <button
-                className="btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTab("plans");
-                }}
-              >
-                ترقية الحساب
-              </button>
-            </>
-          ) : (
-            <>
-              <p>{post.excerpt || post.content}</p>
-
-              {post.access === "vip" && (
-                <span style={{ color: "#facc15" }}>VIP</span>
-              )}
-            </>
-          )}
-        </div>
-      );
-    })
+        {post.access === "vip" && (
+          <span style={{ color: "#facc15" }}>VIP</span>
+        )}
+      </div>
+    ))
 )}
       {tab === "profile" && (
         <section className="card">

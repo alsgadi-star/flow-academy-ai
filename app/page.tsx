@@ -37,6 +37,16 @@ export default function HomePage() {
       setLoadingAuth(false);
     });
 
+    async function loadSignals() {
+  const { data } = await supabase
+    .from("signals")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  setSignals(data || []);
+}
+
+loadSignals();
     return () => data.subscription.unsubscribe();
   }, []);
 

@@ -11,7 +11,6 @@ import {
   Home,
   GraduationCap,
   Radio,
-  LogOut,
   Crown,
 } from "lucide-react";
 
@@ -38,15 +37,16 @@ export default function HomePage() {
     });
 
     async function loadSignals() {
-  const { data } = await supabase
-    .from("signals")
-    .select("*")
-    .order("created_at", { ascending: false });
+      const { data } = await supabase
+        .from("signals")
+        .select("*")
+        .order("created_at", { ascending: false });
 
-  setSignals(data || []);
-}
+      setSignals(data || []);
+    }
 
-loadSignals();
+    loadSignals();
+
     return () => data.subscription.unsubscribe();
   }, []);
 
@@ -72,13 +72,14 @@ loadSignals();
 
   async function analyze() {
     if (!file) return setResult("ارفع صورة الشارت أولاً.");
+
     setLoading(true);
     setResult("جاري قراءة الشارت وتحليل ICT...");
 
     const data = new FormData();
     data.append("image", file);
     data.append("user_id", user.id);
-    
+
     try {
       const res = await fetch("/api/analyze", { method: "POST", body: data });
       const json = await res.json();
@@ -179,114 +180,88 @@ loadSignals();
         </section>
       )}
 
-    {tab === "signals" && (
-  <section className="card">
-    <div className="card-title">
-      <div className="icon">
-        <Radio size={23} />
-      </div>
-      <h3>الإشارات</h3>
-    </div>
+      {tab === "signals" && (
+        <section className="card">
+          <div className="card-title">
+            <div className="icon"><Radio size={23} /></div>
+            <h3>الإشارات</h3>
+          </div>
 
-    {signals.length === 0 ? (
-      <div className="result">
-        لا توجد إشارات حالياً
-      </div>
-    ) : (
-     {tab === "signals" && (
-  <section className="card">
-    <div className="card-title">
-      <div className="icon">
-        <Radio size={23} />
-      </div>
-      <h3>الإشارات</h3>
-    </div>
+          {signals.length === 0 ? (
+            <div className="result">لا توجد إشارات حالياً</div>
+          ) : (
+            signals.map((signal) => {
+              const isVip = signal.access === "vip";
+              const isBuy = signal.direction === "BUY";
 
-    {tab === "signals" && (
-  <section className="card">
-    <div className="card-title">
-      <div className="icon">
-        <Radio size={23} />
-      </div>
-      <h3>الإشارات</h3>
-    </div>
+              const statusLabel =
+                signal.status === "active"
+                  ? "نشطة"
+                  : signal.status === "closed"
+                  ? "منتهية"
+                  : signal.status === "tp_hit"
+                  ? "حققت الهدف"
+                  : signal.status || "نشطة";
 
-    {signals.length === 0 ? (
-      <div className="result">لا توجد إشارات حالياً</div>
-    ) : (
-      signals.map((signal) => {
-        const isVip = signal.access === "vip";
-        const isBuy = signal.direction === "BUY";
+              const statusColor =
+                signal.status === "active"
+                  ? "#22c55e"
+                  : signal.status === "closed"
+                  ? "#ef4444"
+                  : signal.status === "tp_hit"
+                  ? "#facc15"
+                  : "#22c55e";
 
-        const statusLabel =
-          signal.status === "active"
-            ? "نشطة"
-            : signal.status === "closed"
-            ? "منتهية"
-            : signal.status === "tp_hit"
-            ? "حققت الهدف"
-            : signal.status || "نشطة";
-
-        const statusColor =
-          signal.status === "active"
-            ? "#22c55e"
-            : signal.status === "closed"
-            ? "#ef4444"
-            : signal.status === "tp_hit"
-            ? "#facc15"
-            : "#22c55e";
-
-        return (
-          <div
-            key={signal.id}
-            style={{
-              background: "#08162e",
-              border: isVip ? "1px solid #facc15" : "1px solid #17365d",
-              borderRadius: "18px",
-              padding: "20px",
-              marginBottom: "16px",
-              opacity: isVip ? 0.75 : 1,
-            }}
-          >
-            <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span style={{ color: statusColor }}>{statusLabel}</span>
-              {isVip && <span style={{ color: "#facc15" }}>VIP</span>}
-            </div>
-
-            {isVip ? (
-              <div style={{ textAlign: "center", padding: "25px 0" }}>
-                <h2 style={{ color: "#facc15" }}>إشارة VIP</h2>
-                <p style={{ color: "#94a3b8" }}>الترقية مطلوبة للوصول</p>
-                <button className="btn-dark" onClick={() => setTab("plans")}>
-                  ترقية الحساب
-                </button>
-              </div>
-            ) : (
-              <>
-                <h2
+              return (
+                <div
+                  key={signal.id}
                   style={{
-                    color: isBuy ? "#00ff88" : "#ff4d4d",
-                    textAlign: "center",
-                    marginBottom: "15px",
+                    background: "#08162e",
+                    border: isVip ? "1px solid #facc15" : "1px solid #17365d",
+                    borderRadius: "18px",
+                    padding: "20px",
+                    marginBottom: "16px",
+                    opacity: isVip ? 0.75 : 1,
                   }}
                 >
-                  {signal.symbol} {signal.direction}
-                </h2>
+                  <div style={{ display: "flex", justifyContent: "space-between" }}>
+                    <span style={{ color: statusColor }}>{statusLabel}</span>
+                    {isVip && <span style={{ color: "#facc15" }}>VIP</span>}
+                  </div>
 
-                <p>الدخول: {signal.entry_price}</p>
-                <p>وقف الخسارة: {signal.sl}</p>
-                <p>TP1: {signal.tp1}</p>
-                <p>TP2: {signal.tp2}</p>
-                <p>TP3: {signal.tp3}</p>
-              </>
-            )}
-          </div>
-        );
-      })
-    )}
-  </section>
-)}
+                  {isVip ? (
+                    <div style={{ textAlign: "center", padding: "25px 0" }}>
+                      <h2 style={{ color: "#facc15" }}>إشارة VIP</h2>
+                      <p style={{ color: "#94a3b8" }}>الترقية مطلوبة للوصول</p>
+                      <button className="btn-dark" onClick={() => setTab("plans")}>
+                        ترقية الحساب
+                      </button>
+                    </div>
+                  ) : (
+                    <>
+                      <h2
+                        style={{
+                          color: isBuy ? "#00ff88" : "#ff4d4d",
+                          textAlign: "center",
+                          marginBottom: "15px",
+                        }}
+                      >
+                        {signal.symbol} {signal.direction}
+                      </h2>
 
+                      <p>الدخول: {signal.entry_price}</p>
+                      <p>وقف الخسارة: {signal.sl}</p>
+                      <p>TP1: {signal.tp1}</p>
+                      <p>TP2: {signal.tp2}</p>
+                      <p>TP3: {signal.tp3}</p>
+                    </>
+                  )}
+                </div>
+              );
+            })
+          )}
+        </section>
+      )}
 
       {tab === "performance" && (
         <section className="card">

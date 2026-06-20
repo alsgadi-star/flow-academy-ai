@@ -515,17 +515,18 @@ return (
         ))}
       </div>
 
-      {academyTab === "news" ? (
-        news.length === 0 ? (
-          <div className="result">لا توجد أخبار حالياً</div>
-        ) : (
-          news.map((item) => (
-            <div key={item.id} className="result">
-              <h4>{item.title}</h4>
-              <p>{item.content}</p>
-            </div>
-          ))
-     ) : (
+    {academyTab === "news" ? (
+  news.length === 0 ? (
+    <div className="result">لا توجد أخبار حالياً</div>
+  ) : (
+    news.map((item) => (
+      <div key={item.id} className="result">
+        <h4>{item.title}</h4>
+        <p>{item.content}</p>
+      </div>
+    ))
+  )
+) : (
   academyPosts
     .filter((post) => post.type === academyTab)
     .map((post) => (
@@ -539,10 +540,15 @@ return (
         <p>{post.excerpt || post.content}</p>
 
         {post.access === "vip" && (
-          <span style={{ color: "#facc15" }}>VIP</span>
+          <span style={{ color: "#facc15" }}>
+            VIP
+          </span>
         )}
       </div>
     ))
+)}
+    </section>
+  )
 )}
       {tab === "profile" && (
         <section className="card">

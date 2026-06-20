@@ -168,17 +168,81 @@ export default function HomePage() {
         </section>
       )}
 
-      {tab === "signals" && (
-        <section className="card">
-          <div className="card-title">
-            <div className="icon"><Radio size={23} /></div>
-            <h3>الإشارات</h3>
-          </div>
-          <div className="result">
-            Flow Academy VIP{"\n"}XAUUSD BUY 4148{"\n"}TP1 4152{"\n"}TP2 4156{"\n"}TP3 4160{"\n"}SL 4134
-          </div>
-        </section>
-      )}
+    {tab === "signals" && (
+  <section className="card">
+    <div className="card-title">
+      <div className="icon">
+        <Radio size={23} />
+      </div>
+      <h3>الإشارات</h3>
+    </div>
+
+    <div
+      style={{
+        background: "#0f172a",
+        borderRadius: "18px",
+        padding: "16px",
+        marginBottom: "12px",
+        border: "1px solid #1e293b",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3 style={{ color: "#22c55e" }}>XAUUSD BUY</h3>
+        <span
+          style={{
+            background: "#14532d",
+            color: "#22c55e",
+            padding: "4px 10px",
+            borderRadius: "10px",
+            fontSize: "12px",
+          }}
+        >
+          نشطة
+        </span>
+      </div>
+
+      <div style={{ marginTop: "12px" }}>
+        <p>الدخول: 4148</p>
+        <p>وقف الخسارة: 4134</p>
+        <p>TP1: 4152</p>
+        <p>TP2: 4156</p>
+        <p>TP3: 4160</p>
+      </div>
+    </div>
+
+    <div
+      style={{
+        background: "#0f172a",
+        borderRadius: "18px",
+        padding: "16px",
+        border: "1px solid #1e293b",
+      }}
+    >
+      <div style={{ display: "flex", justifyContent: "space-between" }}>
+        <h3 style={{ color: "#ef4444" }}>GBPUSD SELL</h3>
+        <span
+          style={{
+            background: "#7f1d1d",
+            color: "#f87171",
+            padding: "4px 10px",
+            borderRadius: "10px",
+            fontSize: "12px",
+          }}
+        >
+          مغلقة
+        </span>
+      </div>
+
+      <div style={{ marginTop: "12px" }}>
+        <p>الدخول: 1.3560</p>
+        <p>وقف الخسارة: 1.3600</p>
+        <p>TP1: 1.3520</p>
+        <p>TP2: 1.3480</p>
+        <p>TP3: 1.3440</p>
+      </div>
+    </div>
+  </section>
+)}
 
       {tab === "performance" && (
         <section className="card">

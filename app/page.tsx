@@ -242,7 +242,6 @@ if (!user) {
 
 const isAdmin = user?.email === "alsgadi@gmail.com";
   const isVIP = isAdmin;
-
 return (
   <main className="phone">
       <header className="top">
@@ -532,7 +531,7 @@ return (
       ) : (
         academyPosts
           .filter((post) => post.type === academyTab)
-          .map((const locked =
+          .map(const locked =
   post.access === "vip" && !isVIP;) => (
             <div
   key={post.id}

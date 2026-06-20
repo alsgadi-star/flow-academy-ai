@@ -73,6 +73,37 @@ export default function HomePage() {
     await supabase.auth.signOut();
     setUser(null);
   }
+  async function addSignal() {
+  const { error } = await supabase
+    .from("signals")
+    .insert([newSignal]);
+
+  if (!error) {
+    alert("تمت إضافة الإشارة");
+
+    const { data } = await supabase
+      .from("signals")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    setSignals(data || []);
+
+    setNewSignal({
+      symbol: "",
+      direction: "BUY",
+      entry_price: "",
+      sl: "",
+      tp1: "",
+      tp2: "",
+      tp3: "",
+      status: "active",
+      signal_type: "scalp",
+      access: "free",
+    });
+  } else {
+    alert(error.message);
+  }
+}
 
   function onFile(e: React.ChangeEvent<HTMLInputElement>) {
     const f = e.target.files?.[0];
@@ -318,13 +349,63 @@ export default function HomePage() {
       {tab === "admin" && (
   <section className="card">
     <div className="card-title">
-      <div className="icon"><Crown size={23} /></div>
+      <div className="icon">
+        <Crown size={23} />
+      </div>
       <h3>لوحة الإدارة</h3>
     </div>
 
-    <div className="result">
-      إضافة الإشارات قريباً من داخل التطبيق.
-    </div>
+    <input
+      placeholder="الرمز"
+      value={newSignal.symbol}
+      onChange={(e) =>
+        setNewSignal({ ...newSignal, symbol: e.target.value })
+      }
+    />
+
+    <input
+      placeholder="الدخول"
+      value={newSignal.entry_price}
+      onChange={(e) =>
+        setNewSignal({ ...newSignal, entry_price: e.target.value })
+      }
+    />
+
+    <input
+      placeholder="SL"
+      value={newSignal.sl}
+      onChange={(e) =>
+        setNewSignal({ ...newSignal, sl: e.target.value })
+      }
+    />
+
+    <input
+      placeholder="TP1"
+      value={newSignal.tp1}
+      onChange={(e) =>
+        setNewSignal({ ...newSignal, tp1: e.target.value })
+      }
+    />
+
+    <input
+      placeholder="TP2"
+      value={newSignal.tp2}
+      onChange={(e) =>
+        setNewSignal({ ...newSignal, tp2: e.target.value })
+      }
+    />
+
+    <input
+      placeholder="TP3"
+      value={newSignal.tp3}
+      onChange={(e) =>
+        setNewSignal({ ...newSignal, tp3: e.target.value })
+      }
+    />
+
+    <button className="btn" onClick={addSignal}>
+      إضافة إشارة
+    </button>
   </section>
 )}
 

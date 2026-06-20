@@ -202,6 +202,15 @@ loadSignals();
       <h3>الإشارات</h3>
     </div>
 
+    {tab === "signals" && (
+  <section className="card">
+    <div className="card-title">
+      <div className="icon">
+        <Radio size={23} />
+      </div>
+      <h3>الإشارات</h3>
+    </div>
+
     {signals.length === 0 ? (
       <div className="result">لا توجد إشارات حالياً</div>
     ) : (
@@ -240,36 +249,13 @@ loadSignals();
             }}
           >
             <div style={{ display: "flex", justifyContent: "space-between" }}>
-              <span
-                style={{
-                  color: statusColor,
-                  background: "rgba(255,255,255,0.06)",
-                  padding: "5px 10px",
-                  borderRadius: "999px",
-                  fontSize: "12px",
-                }}
-              >
-                {statusLabel}
-              </span>
-
-              {isVip && (
-                <span
-                  style={{
-                    color: "#facc15",
-                    background: "rgba(250,204,21,0.12)",
-                    padding: "5px 10px",
-                    borderRadius: "999px",
-                    fontSize: "12px",
-                  }}
-                >
-                  VIP
-                </span>
-              )}
+              <span style={{ color: statusColor }}>{statusLabel}</span>
+              {isVip && <span style={{ color: "#facc15" }}>VIP</span>}
             </div>
 
             {isVip ? (
               <div style={{ textAlign: "center", padding: "25px 0" }}>
-                <h2 style={{ color: "#facc15" }}>🔒 إشارة VIP</h2>
+                <h2 style={{ color: "#facc15" }}>إشارة VIP</h2>
                 <p style={{ color: "#94a3b8" }}>الترقية مطلوبة للوصول</p>
                 <button className="btn-dark" onClick={() => setTab("plans")}>
                   ترقية الحساب
@@ -300,7 +286,6 @@ loadSignals();
     )}
   </section>
 )}
-
 
 
       {tab === "performance" && (

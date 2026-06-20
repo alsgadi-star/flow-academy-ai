@@ -529,51 +529,51 @@ return (
       ) : academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
         <div className="result">لا يوجد محتوى حالياً</div>
       ) : (
-        academyPosts
-          .filter((post) => post.type === academyTab)
-          .map(const locked =
-  post.access === "vip" && !isVIP;) => (
-            <div
-  key={post.id}
-  className="result"
-  style={{ cursor: "pointer" }}
-  onClick={() => {
-    if (!locked) {
-      setSelectedPost(post);
-    }
-  }}
->
-  <h4>{post.title}</h4>
+  academyPosts
+    .filter((post) => post.type === academyTab)
+    .map((post) => {
+      const locked = post.access === "vip" && !isVIP;
 
-  {locked ? (
-    <>
-      <p>🔒 محتوى VIP</p>
+      return (
+        <div
+          key={post.id}
+          className="result"
+          style={{ cursor: locked ? "default" : "pointer" }}
+          onClick={() => {
+            if (!locked) {
+              setSelectedPost(post);
+            }
+          }}
+        >
+          <h4>{post.title}</h4>
 
-      <button
-        className="btn"
-        onClick={() => setTab("plans")}
-      >
-        ترقية الحساب
-      </button>
-    </>
-  ) : (
-    <>
-      <p>{post.excerpt || post.content}</p>
+          {locked ? (
+            <>
+              <p>🔒 محتوى VIP</p>
 
-      {post.access === "vip" && (
-        <span style={{ color: "#facc15" }}>
-          VIP
-        </span>
-      )}
-    </>
-  )}
-</div>
-          ))
-      )}
-    </section>
-  )
+              <button
+                className="btn"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setTab("plans");
+                }}
+              >
+                ترقية الحساب
+              </button>
+            </>
+          ) : (
+            <>
+              <p>{post.excerpt || post.content}</p>
+
+              {post.access === "vip" && (
+                <span style={{ color: "#facc15" }}>VIP</span>
+              )}
+            </>
+          )}
+        </div>
+      );
+    })
 )}
-
       {tab === "profile" && (
         <section className="card">
           <div className="card-title">

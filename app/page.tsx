@@ -407,6 +407,57 @@ return (
       )}
 
       {tab === "academy" && (
+   selectedPost ? (
+    <section className="card">
+      <button
+        className="btn-dark"
+        onClick={() => setSelectedPost(null)}
+        style={{ marginBottom: "15px" }}
+      >
+        ← رجوع
+      </button>
+      <h2>{selectedPost.title}</h2>
+
+      {selectedPost.access === "vip" && (
+        <div
+          style={{
+            background: "#facc15",
+            color: "#000",
+            padding: "6px 10px",
+            borderRadius: "10px",
+            display: "inline-block",
+            marginBottom: "12px",
+            fontWeight: "bold",
+          }}
+        >
+          VIP
+        </div>
+      )}
+
+      <div
+        style={{
+          whiteSpace: "pre-wrap",
+          lineHeight: "1.9",
+          color: "#cbd5e1",
+        }}
+      >
+        {selectedPost.content}
+      </div>
+
+      {selectedPost.video_url && (
+        <a
+          href={selectedPost.video_url}
+          target="_blank"
+          rel="noreferrer"
+          className="btn"
+          style={{ marginTop: "20px", display: "block" }}
+        >
+          مشاهدة الفيديو
+        </a>
+      )}
+    </section>
+  );
+}
   <section className="card">
     <div className="card-title">
       <div className="icon">

@@ -453,44 +453,77 @@ return (
       <button className="btn" onClick={addSignal}>
         إضافة إشارة
       </button>
-    </div>
-  </section>
-)}
 
-    <hr style={{ margin: "20px 0" }} />
+          <hr style={{ margin: "20px 0" }} />
+
+
 
 <h3>إضافة خبر اقتصادي</h3>
 
+
+
 <input
+
   placeholder="عنوان الخبر"
+
   value={newsItem.title}
+
   onChange={(e) =>
+
     setNewsItem({ ...newsItem, title: e.target.value })
+
   }
+
 />
+
+
 
 <textarea
+
   placeholder="محتوى الخبر"
+
   value={newsItem.content}
+
   onChange={(e) =>
+
     setNewsItem({ ...newsItem, content: e.target.value })
+
   }
+
 />
 
+
+
 <select
+
   value={newsItem.impact}
+
   onChange={(e) =>
+
     setNewsItem({ ...newsItem, impact: e.target.value })
+
   }
+
 >
+
   <option value="high">عالي التأثير</option>
+
   <option value="medium">متوسط التأثير</option>
+
   <option value="low">منخفض التأثير</option>
+
 </select>
 
+
+
 <button className="btn" onClick={addNews}>
+
   إضافة خبر
+
 </button>
+    </div>
+  </section>
+)}
     
       {tab === "plans" && (
         <section className="card">

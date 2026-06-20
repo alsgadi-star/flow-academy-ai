@@ -24,6 +24,18 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState("");
   const [signals, setSignals] = useState<any[]>([]);
+  const [newSignal, setNewSignal] = useState({
+  symbol: "",
+  direction: "BUY",
+  entry_price: "",
+  sl: "",
+  tp1: "",
+  tp2: "",
+  tp3: "",
+  status: "active",
+  signal_type: "scalp",
+  access: "free",
+});
 
   useEffect(() => {
     supabase.auth.getUser().then(({ data }) => {

@@ -213,8 +213,7 @@ loadSignals();
           >
             {signal.symbol} {signal.direction}
           </h2>
-
-          <p>الدخول: {signal.entry}</p>
+          <p>الدخول: {signal.entry_price}</p>
           <p>وقف الخسارة: {signal.sl}</p>
           <p>TP1: {signal.tp1}</p>
           <p>TP2: {signal.tp2}</p>
@@ -224,6 +223,8 @@ loadSignals();
     )}
   </section>
 )}
+
+
 
       {tab === "performance" && (
         <section className="card">

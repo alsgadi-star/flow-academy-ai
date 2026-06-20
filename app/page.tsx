@@ -414,43 +414,63 @@ return (
       <h3>الأكاديمية</h3>
     </div>
 
-    <div className="feature">الأخبار الاقتصادية</div>
+    <div style={{ display: "flex", gap: "8px", overflowX: "auto", marginBottom: "16px" }}>
+      <button className="btn-dark" onClick={() => setAcademyTab("news")}>الأخبار</button>
+      <button className="btn-dark" onClick={() => setAcademyTab("article")}>المقالات</button>
+      <button className="btn-dark" onClick={() => setAcademyTab("daily")}>التحليل اليومي</button>
+      <button className="btn-dark" onClick={() => setAcademyTab("lesson")}>ICT و CRT</button>
+      <button className="btn-dark" onClick={() => setAcademyTab("webinar")}>الويبينارات</button>
+    </div>
 
-    {news.length === 0 ? (
-      <div className="result">لا توجد أخبار حالياً</div>
+    {academyTab === "news" ? (
+      news.length === 0 ? (
+        <div className="result">لا توجد أخبار حالياً</div>
+      ) : (
+        news.map((item) => (
+          <div key={item.id} className="result">
+            <h4>{item.title}</h4>
+            <p>{item.content}</p>
+          </div>
+        ))
+      )
     ) : (
-      news.map((item) => (
-        <div
-          key={item.id}
-          style={{
-            background: "#08162e",
-            border: "1px solid #17365d",
-            borderRadius: "16px",
-            padding: "14px",
-            marginTop: "12px",
-          }}
-        >
-          <h4>{item.title}</h4>
-          <p style={{ color: "#cbd5e1" }}>{item.content}</p>
+      academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
+        <div className="result">لا يوجد محتوى حالياً</div>
+      ) : (
+        academyPosts
+          .filter((post) => post.type === academyTab)
+          .map((post) => (
+            <div key={post.id} className="result">
+              {post.image_url && (
+                <img
+                  src={post.image_url}
+                  alt={post.title}
+                  className="preview"
+                  style={{ display: "block", marginBottom: "12px" }}
+                />
+              )}
 
-          <span
-            style={{
-              color:
-                item.impact === "high"
-                  ? "#ef4444"
-                  : item.impact === "medium"
-                  ? "#facc15"
-                  : "#22c55e",
-            }}
-          >
-            {item.impact === "high"
-              ? "عالي التأثير"
-              : item.impact === "medium"
-              ? "متوسط التأثير"
-              : "منخفض التأثير"}
-          </span>
-        </div>
-      ))
+              <h4>{post.title}</h4>
+              <p>{post.content}</p>
+
+              {post.video_url && (
+                <a
+                  href={post.video_url}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-dark"
+                  style={{ display: "block", textAlign: "center", marginTop: "12px" }}
+                >
+                  مشاهدة الفيديو
+                </a>
+              )}
+
+              {post.access === "vip" && (
+                <span style={{ color: "#facc15" }}>VIP</span>
+              )}
+            </div>
+          ))
+      )
     )}
   </section>
 )}

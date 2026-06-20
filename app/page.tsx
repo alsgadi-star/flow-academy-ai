@@ -615,6 +615,53 @@ return (
 
 </button>
     </div>
+
+    <hr style={{ margin: "20px 0" }} />
+
+<h3>إضافة محتوى للأكاديمية</h3>
+
+<input
+  placeholder="عنوان المحتوى"
+  value={academyItem.title}
+  onChange={(e) =>
+    setAcademyItem({ ...academyItem, title: e.target.value })
+  }
+/>
+
+<textarea
+  placeholder="محتوى الأكاديمية"
+  value={academyItem.content}
+  onChange={(e) =>
+    setAcademyItem({ ...academyItem, content: e.target.value })
+  }
+/>
+
+<select
+  value={academyItem.type}
+  onChange={(e) =>
+    setAcademyItem({ ...academyItem, type: e.target.value })
+  }
+>
+  <option value="article">مقال اقتصادي</option>
+  <option value="daily">تحليل يومي</option>
+  <option value="lesson">درس ICT و CRT</option>
+  <option value="webinar">ويبينار</option>
+</select>
+
+<select
+  value={academyItem.access}
+  onChange={(e) =>
+    setAcademyItem({ ...academyItem, access: e.target.value })
+  }
+>
+  <option value="free">FREE</option>
+  <option value="vip">VIP</option>
+</select>
+
+<button className="btn" onClick={addAcademyContent}>
+  إضافة محتوى
+</button>
+    
   </section>
 )}
     

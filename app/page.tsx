@@ -418,76 +418,51 @@ return (
   style={{
     display: "grid",
     gridTemplateColumns: "repeat(2, 1fr)",
-    gap: "12px",
-    marginBottom: "18px",
+    gap: "14px",
+    marginBottom: "22px",
   }}
 >
   {[
-    {
-      id: "news",
-      icon: "📰",
-      label: "الأخبار",
-      desc: "أحدث الأخبار",
-    },
-    {
-      id: "article",
-      icon: "📚",
-      label: "المقالات",
-      desc: "مقالات اقتصادية",
-    },
-    {
-      id: "daily",
-      icon: "📈",
-      label: "التحليل",
-      desc: "تحليل يومي",
-    },
-    {
-      id: "lesson",
-      icon: "🎓",
-      label: "ICT",
-      desc: "دروس CRT و ICT",
-    },
-    {
-      id: "webinar",
-      icon: "🎥",
-      label: "ويبينار",
-      desc: "جلسات مباشرة",
-    },
+    { id: "news", title: "الأخبار", sub: "أحدث الأخبار الاقتصادية", img: "/academy/news.jpg", icon: "📰" },
+    { id: "article", title: "المقالات", sub: "مقالات اقتصادية مفيدة", img: "/academy/articles.jpg", icon: "📚" },
+    { id: "daily", title: "التحليل اليومي", sub: "تحليلات وتوقعات يومية", img: "/academy/analysis.jpg", icon: "📈" },
+    { id: "lesson", title: "ICT & CRT", sub: "دروس واستراتيجيات متقدمة", img: "/academy/ict.jpg", icon: "🎓" },
+    { id: "webinar", title: "الويبينارات", sub: "جلسات مباشرة ومسجلة", img: "/academy/webinars.jpg", icon: "🎥" },
   ].map((item) => (
     <button
       key={item.id}
       onClick={() => setAcademyTab(item.id)}
       style={{
-        background:
-          academyTab === item.id
-            ? "linear-gradient(135deg,#0ea5e9,#0369a1)"
-            : "linear-gradient(180deg,#08162e,#061124)",
-        border:
-          academyTab === item.id
-            ? "1px solid #38bdf8"
-            : "1px solid #17365d",
-        borderRadius: "18px",
-        padding: "14px 10px",
+        position: "relative",
+        overflow: "hidden",
+        borderRadius: "22px",
+        minHeight: "155px",
+        padding: 0,
+        border: academyTab === item.id ? "1px solid #0ea5e9" : "1px solid #17365d",
+        background: "#08162e",
         color: "#fff",
         textAlign: "right",
-        minHeight: "92px",
-        cursor: "pointer",
-        boxShadow:
-          academyTab === item.id
-            ? "0 0 20px rgba(14,165,233,0.35)"
-            : "none",
+        boxShadow: academyTab === item.id ? "0 0 25px rgba(14,165,233,0.45)" : "none",
       }}
     >
-      <div style={{ fontSize: "24px", marginBottom: "8px" }}>
-        {item.icon}
-      </div>
+      <img
+        src={item.img}
+        alt={item.title}
+        style={{
+          width: "100%",
+          height: "80px",
+          objectFit: "cover",
+          display: "block",
+          opacity: 0.85,
+        }}
+      />
 
-      <div style={{ fontSize: "14px", fontWeight: 700 }}>
-        {item.label}
-      </div>
-
-      <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
-        {item.desc}
+      <div style={{ padding: "12px" }}>
+        <div style={{ fontSize: "22px", marginBottom: "6px" }}>{item.icon}</div>
+        <h4 style={{ margin: 0, fontSize: "15px" }}>{item.title}</h4>
+        <p style={{ margin: "5px 0 0", fontSize: "11px", color: "#94a3b8" }}>
+          {item.sub}
+        </p>
       </div>
     </button>
   ))}

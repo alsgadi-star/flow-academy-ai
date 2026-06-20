@@ -18,6 +18,7 @@ export default function HomePage() {
   const [user, setUser] = useState<any>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
   const [tab, setTab] = useState("home");
+  const [academyTab, setAcademyTab] = useState("news");
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [result, setResult] = useState("نتيجة التحليل تظهر هنا.");

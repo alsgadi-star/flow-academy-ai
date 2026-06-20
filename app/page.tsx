@@ -53,11 +53,12 @@ export default function HomePage() {
   });
 
   const [academyItem, setAcademyItem] = useState({
-    title: "",
-    content: "",
-    type: "article",
-    access: "free",
-  });
+  title: "",
+  excerpt: "",
+  content: "",
+  type: "article",
+  access: "free",
+});
  useEffect(() => {
   supabase.auth.getUser().then(({ data }) => {
     setUser(data.user);
@@ -188,11 +189,12 @@ async function addAcademyContent() {
     setAcademyPosts(data || []);
 
     setAcademyItem({
-      title: "",
-      content: "",
-      type: "article",
-      access: "free",
-    });
+  title: "",
+  excerpt: "",
+  content: "",
+  type: "article",
+  access: "free",
+});
   } else {
     alert(error.message);
   }
@@ -537,7 +539,7 @@ return (
               style={{ cursor: "pointer" }}
             >
               <h4>{post.title}</h4>
-              <p>{post.content}</p>
+              <p>{post.excerpt || post.content}</p>
               {post.access === "vip" && (
                 <span style={{ color: "#facc15" }}>VIP</span>
               )}
@@ -721,6 +723,17 @@ return (
   value={academyItem.title}
   onChange={(e) =>
     setAcademyItem({ ...academyItem, title: e.target.value })
+  }
+/>
+
+<textarea
+  placeholder="وصف مختصر"
+  value={academyItem.excerpt}
+  onChange={(e) =>
+    setAcademyItem({
+      ...academyItem,
+      excerpt: e.target.value,
+    })
   }
 />
 

@@ -357,18 +357,54 @@ return (
       )}
 
       {tab === "academy" && (
-        <section className="card">
-          <div className="card-title">
-            <div className="icon"><GraduationCap size={23} /></div>
-            <h3>الأكاديمية</h3>
-          </div>
-          <div className="feature">الأخبار الاقتصادية</div>
-          <div className="feature">المقالات الاقتصادية</div>
-          <div className="feature">التحليل اليومي</div>
-          <div className="feature">دروس ICT و CRT</div>
-          <div className="feature">الويبينارات</div>
-        </section>
-      )}
+  <section className="card">
+    <div className="card-title">
+      <div className="icon">
+        <GraduationCap size={23} />
+      </div>
+      <h3>الأكاديمية</h3>
+    </div>
+
+    <div className="feature">الأخبار الاقتصادية</div>
+
+    {news.length === 0 ? (
+      <div className="result">لا توجد أخبار حالياً</div>
+    ) : (
+      news.map((item) => (
+        <div
+          key={item.id}
+          style={{
+            background: "#08162e",
+            border: "1px solid #17365d",
+            borderRadius: "16px",
+            padding: "14px",
+            marginTop: "12px",
+          }}
+        >
+          <h4>{item.title}</h4>
+          <p style={{ color: "#cbd5e1" }}>{item.content}</p>
+
+          <span
+            style={{
+              color:
+                item.impact === "high"
+                  ? "#ef4444"
+                  : item.impact === "medium"
+                  ? "#facc15"
+                  : "#22c55e",
+            }}
+          >
+            {item.impact === "high"
+              ? "عالي التأثير"
+              : item.impact === "medium"
+              ? "متوسط التأثير"
+              : "منخفض التأثير"}
+          </span>
+        </div>
+      ))
+    )}
+  </section>
+)}
 
       {tab === "profile" && (
         <section className="card">

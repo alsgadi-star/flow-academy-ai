@@ -303,6 +303,18 @@ export default function HomePage() {
           <button className="logout" onClick={logout}>تسجيل خروج</button>
         </section>
       )}
+      {tab === "admin" && (
+  <section className="card">
+    <div className="card-title">
+      <div className="icon"><Crown size={23} /></div>
+      <h3>لوحة الإدارة</h3>
+    </div>
+
+    <div className="result">
+      إضافة الإشارات قريباً من داخل التطبيق.
+    </div>
+  </section>
+)}
 
       {tab === "plans" && (
         <section className="card">
@@ -322,6 +334,9 @@ export default function HomePage() {
         <button className={`navbtn ${tab === "signals" ? "active" : ""}`} onClick={() => setTab("signals")}><Radio size={20} />الإشارات</button>
         <button className={`navbtn ${tab === "performance" ? "active" : ""}`} onClick={() => setTab("performance")}><BarChart3 size={20} />الأداء</button>
         <button className={`navbtn ${tab === "academy" ? "active" : ""}`} onClick={() => setTab("academy")}><GraduationCap size={20} />الأكاديمية</button>
+        <button className={`navbtn ${tab === "admin" ? "active" : ""}`} onClick={() => setTab("admin")}>
+  <Crown size={20} />إدارة
+</button>
         <button className={`navbtn ${tab === "profile" ? "active" : ""}`} onClick={() => setTab("profile")}><User size={20} />ملفي</button>
       </nav>
     </main>

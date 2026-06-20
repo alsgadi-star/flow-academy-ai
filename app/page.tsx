@@ -525,8 +525,8 @@ return (
               <p>{item.content}</p>
             </div>
           ))
-        )
-      ) : academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
+     ) : (
+          academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
         <div className="result">لا يوجد محتوى حالياً</div>
       ) : (
   academyPosts

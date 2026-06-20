@@ -24,6 +24,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [question, setQuestion] = useState("");
   const [signals, setSignals] = useState<any[]>([]);
+  const [news, setNews] = useState<any[]>([]);
   const [newSignal, setNewSignal] = useState({
   symbol: "",
   direction: "BUY",
@@ -63,10 +64,19 @@ const [newsItem, setNewsItem] = useState({
       setSignals(data || []);
     }
 
-    loadSignals();
+    async function loadNews() {
+  const { data } = await supabase
+    .from("news")
+    .select("*")
+    .order("created_at", { ascending: false });
 
-    return () => data.subscription.unsubscribe();
-  }, []);
+  setNews(data || []);
+}
+
+    loadSignals();
+loadNews();
+
+return () => data.subscription.unsubscribe();
 
   async function loginGoogle() {
     await supabase.auth.signInWithOAuth({

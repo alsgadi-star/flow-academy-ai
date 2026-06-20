@@ -355,57 +355,79 @@ export default function HomePage() {
       <h3>لوحة الإدارة</h3>
     </div>
 
-    <input
-      placeholder="الرمز"
-      value={newSignal.symbol}
-      onChange={(e) =>
-        setNewSignal({ ...newSignal, symbol: e.target.value })
-      }
-    />
+    <div style={{ display: "grid", gap: "12px" }}>
+      <input
+        placeholder="الرمز (XAUUSD)"
+        value={newSignal.symbol}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, symbol: e.target.value })
+        }
+      />
 
-    <input
-      placeholder="الدخول"
-      value={newSignal.entry_price}
-      onChange={(e) =>
-        setNewSignal({ ...newSignal, entry_price: e.target.value })
-      }
-    />
+      <select
+        value={newSignal.direction}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, direction: e.target.value })
+        }
+      >
+        <option value="BUY">BUY</option>
+        <option value="SELL">SELL</option>
+      </select>
 
-    <input
-      placeholder="SL"
-      value={newSignal.sl}
-      onChange={(e) =>
-        setNewSignal({ ...newSignal, sl: e.target.value })
-      }
-    />
+      <input
+        placeholder="سعر الدخول"
+        value={newSignal.entry_price}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, entry_price: e.target.value })
+        }
+      />
 
-    <input
-      placeholder="TP1"
-      value={newSignal.tp1}
-      onChange={(e) =>
-        setNewSignal({ ...newSignal, tp1: e.target.value })
-      }
-    />
+      <input
+        placeholder="وقف الخسارة"
+        value={newSignal.sl}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, sl: e.target.value })
+        }
+      />
 
-    <input
-      placeholder="TP2"
-      value={newSignal.tp2}
-      onChange={(e) =>
-        setNewSignal({ ...newSignal, tp2: e.target.value })
-      }
-    />
+      <input
+        placeholder="TP1"
+        value={newSignal.tp1}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, tp1: e.target.value })
+        }
+      />
 
-    <input
-      placeholder="TP3"
-      value={newSignal.tp3}
-      onChange={(e) =>
-        setNewSignal({ ...newSignal, tp3: e.target.value })
-      }
-    />
+      <input
+        placeholder="TP2"
+        value={newSignal.tp2}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, tp2: e.target.value })
+        }
+      />
 
-    <button className="btn" onClick={addSignal}>
-      إضافة إشارة
-    </button>
+      <input
+        placeholder="TP3"
+        value={newSignal.tp3}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, tp3: e.target.value })
+        }
+      />
+
+      <select
+        value={newSignal.access}
+        onChange={(e) =>
+          setNewSignal({ ...newSignal, access: e.target.value })
+        }
+      >
+        <option value="free">FREE</option>
+        <option value="vip">VIP</option>
+      </select>
+
+      <button className="btn" onClick={addSignal}>
+        إضافة إشارة
+      </button>
+    </div>
   </section>
 )}
 

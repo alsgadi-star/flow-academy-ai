@@ -17,14 +17,21 @@ import {
 export default function HomePage() {
   const [user, setUser] = useState<any>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
+
   const [tab, setTab] = useState("home");
+  const [academyTab, setAcademyTab] = useState("news");
+
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
   const [result, setResult] = useState("نتيجة التحليل تظهر هنا.");
   const [loading, setLoading] = useState(false);
+
   const [question, setQuestion] = useState("");
+
   const [signals, setSignals] = useState<any[]>([]);
   const [news, setNews] = useState<any[]>([]);
+  const [academyPosts, setAcademyPosts] = useState<any[]>([]);
+
   const [newSignal, setNewSignal] = useState({
   symbol: "",
   direction: "BUY",

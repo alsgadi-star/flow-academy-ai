@@ -416,31 +416,61 @@ return (
 
     <div
   style={{
-    display: "flex",
-    gap: "10px",
-    overflowX: "auto",
+    display: "grid",
+    gridTemplateColumns: "repeat(2, 1fr)",
+    gap: "12px",
     marginBottom: "18px",
-    paddingBottom: "6px",
   }}
 >
   {[
-    { id: "news", label: "الأخبار" },
-    { id: "article", label: "المقالات" },
-    { id: "daily", label: "التحليل اليومي" },
-    { id: "lesson", label: "ICT و CRT" },
-    { id: "webinar", label: "الويبينارات" },
+    {
+      id: "news",
+      icon: "📰",
+      label: "الأخبار",
+      desc: "أحدث الأخبار",
+    },
+    {
+      id: "article",
+      icon: "📚",
+      label: "المقالات",
+      desc: "مقالات اقتصادية",
+    },
+    {
+      id: "daily",
+      icon: "📈",
+      label: "التحليل",
+      desc: "تحليل يومي",
+    },
+    {
+      id: "lesson",
+      icon: "🎓",
+      label: "ICT",
+      desc: "دروس CRT و ICT",
+    },
+    {
+      id: "webinar",
+      icon: "🎥",
+      label: "ويبينار",
+      desc: "جلسات مباشرة",
+    },
   ].map((item) => (
     <button
       key={item.id}
       onClick={() => setAcademyTab(item.id)}
       style={{
-        border: "1px solid #17365d",
-        background: academyTab === item.id ? "#0ea5e9" : "#08162e",
-        color: academyTab === item.id ? "#ffffff" : "#cbd5e1",
-        borderRadius: "999px",
-        padding: "10px 14px",
-        fontSize: "13px",
-        whiteSpace: "nowrap",
+        background:
+          academyTab === item.id
+            ? "linear-gradient(135deg,#0ea5e9,#0369a1)"
+            : "linear-gradient(180deg,#08162e,#061124)",
+        border:
+          academyTab === item.id
+            ? "1px solid #38bdf8"
+            : "1px solid #17365d",
+        borderRadius: "18px",
+        padding: "14px 10px",
+        color: "#fff",
+        textAlign: "right",
+        minHeight: "92px",
         cursor: "pointer",
         boxShadow:
           academyTab === item.id
@@ -448,7 +478,17 @@ return (
             : "none",
       }}
     >
-      {item.label}
+      <div style={{ fontSize: "24px", marginBottom: "8px" }}>
+        {item.icon}
+      </div>
+
+      <div style={{ fontSize: "14px", fontWeight: 700 }}>
+        {item.label}
+      </div>
+
+      <div style={{ fontSize: "11px", color: "#94a3b8", marginTop: "4px" }}>
+        {item.desc}
+      </div>
     </button>
   ))}
 </div>

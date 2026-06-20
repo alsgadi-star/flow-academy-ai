@@ -139,19 +139,22 @@ export default function HomePage() {
   }
 
   if (!user) {
-    return (
-      <main className="phone" style={{ display: "grid", placeItems: "center" }}>
-        <section className="card" style={{ textAlign: "center", width: "100%" }}>
-          <div className="logo" style={{ margin: "0 auto 16px" }}>F</div>
-          <h1>Flow Academy AI</h1>
-          <p className="sub">سجل الدخول للمتابعة</p>
-          <button className="btn" onClick={loginGoogle}>
-            تسجيل الدخول عبر Google
-          </button>
-        </section>
-      </main>
-    );
-  }
+  return (
+    <main className="phone" style={{ display: "grid", placeItems: "center" }}>
+      <section className="card" style={{ textAlign: "center", width: "100%" }}>
+        <div className="logo" style={{ margin: "0 auto 16px" }}>F</div>
+        <h1>Flow Academy AI</h1>
+        <p className="sub">سجل الدخول للمتابعة</p>
+        <button className="btn" onClick={loginGoogle}>
+          تسجيل الدخول عبر Google
+        </button>
+      </section>
+    </main>
+  );
+}
+
+const isAdmin = user?.email === "alsgadi@gmail.com";
+
 
   return (
     <main className="phone">
@@ -346,7 +349,7 @@ export default function HomePage() {
           <button className="logout" onClick={logout}>تسجيل خروج</button>
         </section>
       )}
-      {tab === "admin" && (
+      {isAdmin && tab === "admin" && (
   <section className="card">
     <div className="card-title">
       <div className="icon">
@@ -444,16 +447,61 @@ export default function HomePage() {
       )}
 
       <nav className="bottom">
-        <button className={`navbtn ${tab === "home" ? "active" : ""}`} onClick={() => setTab("home")}><Home size={20} />الرئيسية</button>
-        <button className={`navbtn ${tab === "advisor" ? "active" : ""}`} onClick={() => setTab("advisor")}><Brain size={20} />المستشار</button>
-        <button className={`navbtn ${tab === "signals" ? "active" : ""}`} onClick={() => setTab("signals")}><Radio size={20} />الإشارات</button>
-        <button className={`navbtn ${tab === "performance" ? "active" : ""}`} onClick={() => setTab("performance")}><BarChart3 size={20} />الأداء</button>
-        <button className={`navbtn ${tab === "academy" ? "active" : ""}`} onClick={() => setTab("academy")}><GraduationCap size={20} />الأكاديمية</button>
-        <button className={`navbtn ${tab === "admin" ? "active" : ""}`} onClick={() => setTab("admin")}>
-  <Crown size={20} />إدارة
-</button>
-        <button className={`navbtn ${tab === "profile" ? "active" : ""}`} onClick={() => setTab("profile")}><User size={20} />ملفي</button>
-      </nav>
-    </main>
-  );
-}
+  <button
+    className={`navbtn ${tab === "home" ? "active" : ""}`}
+    onClick={() => setTab("home")}
+  >
+    <Home size={20} />
+    الرئيسية
+  </button>
+
+  <button
+    className={`navbtn ${tab === "advisor" ? "active" : ""}`}
+    onClick={() => setTab("advisor")}
+  >
+    <Brain size={20} />
+    المستشار
+  </button>
+
+  <button
+    className={`navbtn ${tab === "signals" ? "active" : ""}`}
+    onClick={() => setTab("signals")}
+  >
+    <Radio size={20} />
+    الإشارات
+  </button>
+
+  <button
+    className={`navbtn ${tab === "performance" ? "active" : ""}`}
+    onClick={() => setTab("performance")}
+  >
+    <BarChart3 size={20} />
+    الأداء
+  </button>
+
+  <button
+    className={`navbtn ${tab === "academy" ? "active" : ""}`}
+    onClick={() => setTab("academy")}
+  >
+    <GraduationCap size={20} />
+    الأكاديمية
+  </button>
+
+  {isAdmin && (
+    <button
+      className={`navbtn ${tab === "admin" ? "active" : ""}`}
+      onClick={() => setTab("admin")}
+    >
+      <Crown size={20} />
+      إدارة
+    </button>
+  )}
+
+  <button
+    className={`navbtn ${tab === "profile" ? "active" : ""}`}
+    onClick={() => setTab("profile")}
+  >
+    <User size={20} />
+    ملفي
+  </button>
+</nav>

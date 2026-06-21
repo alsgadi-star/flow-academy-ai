@@ -736,10 +736,17 @@ return (
           }
         }
 
-        if (item.target_table === "news") {
-          setAcademyTab("news");
-          setTab("academy");
-        }
+       if (item.target_table === "news") {
+  const newsItem = news.find(
+    (n) => String(n.id) === String(item.target_id)
+  );
+
+  if (newsItem) {
+    setSelectedNews(newsItem);
+    setAcademyTab("news");
+    setTab("academy");
+  }
+}
 
         if (item.type === "signal") {
           setTab("signals");

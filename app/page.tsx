@@ -902,9 +902,6 @@ return (
   className={`navbtn ${tab === "notifications" ? "active" : ""}`}
   onClick={() => setTab("notifications")}
 >
-  <Bell size={20} />
-  الإشعارات
-</button>
     <Radio size={20} />
     الإشارات
   </button>

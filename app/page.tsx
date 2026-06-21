@@ -677,20 +677,47 @@ return (
       <h3>الإشعارات</h3>
     </div>
 
-    {notifications.length === 0 ? (
-      <div className="result">لا توجد إشعارات حالياً</div>
-    ) : (
-      notifications.map((item) => (
-        <div
-          key={item.id}
-          className="result"
-          style={{ marginBottom: "12px" }}
-        >
-          <h4>{item.title}</h4>
-          <p>{item.message || item.body}</p>
-        </div>
-      ))
-    )}
+   {notifications.length === 0 ? (
+  <div className="result">
+    لا توجد إشعارات حالياً
+  </div>
+) : (
+  notifications.map((item) => (
+    <div
+      key={item.id}
+      className="result"
+      onClick={() => {
+        if (item.target_table === "academy_posts") {
+          const post = academyPosts.find(
+            (p) => String(p.id) === String(item.target_id)
+          );
+
+          if (post) {
+            setSelectedPost(post);
+            setAcademyTab(post.type);
+            setTab("academy");
+          }
+        }
+
+        if (item.target_table === "news") {
+          setAcademyTab("news");
+          setTab("academy");
+        }
+
+        if (item.type === "signal") {
+          setTab("signals");
+        }
+      }}
+      style={{
+        marginBottom: "12px",
+        cursor: "pointer",
+      }}
+    >
+      <h4>{item.title}</h4>
+      <p>{item.message || item.body}</p>
+    </div>
+  ))
+)}
   </section>
 )}
     

@@ -36,7 +36,7 @@ export default function HomePage() {
   const [signals, setSignals] = useState<any[]>([]);
   const [news, setNews] = useState<any[]>([]);
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
-
+  const [profiles, setProfiles] = useState<any[]>([]);
   const [subscriptionUserId, setSubscriptionUserId] = useState("");
   const [subscriptionPlan, setSubscriptionPlan] = useState("free");
   const [notifications, setNotifications] = useState<any[]>([]);
@@ -156,10 +156,21 @@ if (session?.user) {
   setSubscription(newSubscription);
 }
 
+
+   async function loadProfiles() {
+  const { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .order("created_at", { ascending: false });
+
+  setProfiles(data || []);
+}
+
 loadSignals();
 loadNews();
 loadAcademyPosts();
 loadNotifications();
+loadProfiles();
 
   return () => data.subscription.unsubscribe();
 }, []);

@@ -131,7 +131,7 @@ loadNotifications();
     await supabase.auth.signOut();
     setUser(null);
   }
-  async function addSignal() {
+ async function addSignal() {
   const { data: insertedSignal, error } = await supabase
     .from("signals")
     .insert([newSignal])
@@ -151,30 +151,6 @@ loadNotifications();
     ]);
 
     alert("تمت إضافة الإشارة");
-
-    const { data } = await supabase
-      .from("signals")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    setSignals(data || []);
-
-    setNewSignal({
-      symbol: "",
-      direction: "BUY",
-      entry_price: "",
-      sl: "",
-      tp1: "",
-      tp2: "",
-      tp3: "",
-      status: "active",
-      signal_type: "scalp",
-      access: "free",
-    });
-  } else {
-    alert(error.message);
-  }
-}
 
     const { data } = await supabase
       .from("signals")

@@ -70,14 +70,24 @@ export default function HomePage() {
   access: "free",
 });
  useEffect(() => {
-  supabase.auth.getUser().then(({ data }) => {
-    setUser(data.user);
-    setLoadingAuth(false);
-  });
+supabase.auth.getUser().then(({ data }) => {
+  setUser(data.user);
+  setLoadingAuth(false);
+
+  if (data.user) {
+    loadSubscription(data.user.id);
+  }
+});
 
   const { data } = supabase.auth.onAuthStateChange((_event, session) => {
     setUser(session?.user ?? null);
-    setLoadingAuth(false);
+setLoadingAuth(false);
+
+if (session?.user) {
+  loadSubscription(session.user.id);
+} else {
+  setSubscription(null);
+}
   });
 
   async function loadSignals() {
@@ -115,6 +125,16 @@ export default function HomePage() {
     .limit(20);
 
   setNotifications(data || []);
+}
+
+   async function loadSubscription(userId: string) {
+  const { data } = await supabase
+    .from("subscriptions")
+    .select("*")
+    .eq("user_id", userId)
+    .maybeSingle();
+
+  setSubscription(data);
 }
 
 loadSignals();

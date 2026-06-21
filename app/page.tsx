@@ -507,14 +507,26 @@ return (
             }}
           >
             <div style={{ fontSize: "28px", marginBottom: "10px" }}>
-              {item.icon}
-            </div>
-            <div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
-              {item.title}
-            </div>
-          </div>
-        ))}
-      </div>
+  {item.icon}
+</div>
+
+<div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
+  {item.title}
+</div>
+
+<p
+  style={{
+    fontSize: "11px",
+    color: "#94a3b8",
+    marginTop: "6px",
+    marginBottom: 0,
+  }}
+>
+  {item.id === "news"
+    ? news.length
+    : academyPosts.filter((p) => p.type === item.id).length}
+  {" "}محتوى
+</p>
 
       {academyTab === "news" ? (
         news.length === 0 ? (

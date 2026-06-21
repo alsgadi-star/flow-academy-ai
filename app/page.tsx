@@ -510,7 +510,7 @@ return (
   {item.icon}
 </div>
 
-<>
+
   <div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
     {item.title}
   </div>
@@ -527,7 +527,7 @@ return (
       : academyPosts.filter((p) => p.type === item.id).length}{" "}
     محتوى
   </div>
-</>
+
 
       {academyTab === "news" ? (
         news.length === 0 ? (

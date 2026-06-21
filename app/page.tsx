@@ -782,7 +782,8 @@ return (
     <div
       key={item.id}
       className="result"
-    onClick={() => {
+    onClick={async () => {
+  await markNotificationAsRead(item.id);
   if (item.target_table === "signals") {
     const signal = signals.find(
       (s) => String(s.id) === String(item.target_id)

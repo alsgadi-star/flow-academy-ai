@@ -470,63 +470,65 @@ return (
       </div>
 
       <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2,1fr)",
-          gap: "12px",
-          marginBottom: "20px",
-        }}
-      >
-        {[
-          { id: "news", icon: "📰", title: "الأخبار", color: "#0ea5e9" },
-          { id: "article", icon: "📚", title: "المقالات", color: "#8b5cf6" },
-          { id: "daily", icon: "📈", title: "التحليل", color: "#22c55e" },
-          { id: "lesson", icon: "🎓", title: "ICT & CRT", color: "#f59e0b" },
-          { id: "webinar", icon: "🎥", title: "الويبينارات", color: "#ef4444" },
-        ].map((item) => (
-          <div
-            key={item.id}
-            onClick={() => setAcademyTab(item.id)}
-            style={{
-              background:
-                academyTab === item.id
-                  ? "linear-gradient(180deg,#0b2345,#08162e)"
-                  : "#08162e",
-              border:
-                academyTab === item.id
-                  ? `1px solid ${item.color}`
-                  : "1px solid #17365d",
-              borderRadius: "18px",
-              padding: "18px",
-              cursor: "pointer",
-              textAlign: "center",
-              boxShadow:
-                academyTab === item.id
-                  ? `0 0 20px ${item.color}40`
-                  : "none",
-            }}
-          >
-            <div style={{ fontSize: "28px", marginBottom: "10px" }}>
-  {item.icon}
-</div>
-
-<div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
-  {item.title}
-</div>
-
-<div
   style={{
-    fontSize: "11px",
-    color: "#94a3b8",
-    marginTop: "6px",
+    display: "grid",
+    gridTemplateColumns: "repeat(2,1fr)",
+    gap: "12px",
+    marginBottom: "20px",
   }}
 >
-  {item.id === "news"
-    ? news.length
-    : academyPosts.filter((p) => p.type === item.id).length}
-  {" "}محتوى
-</div>
+  {[
+    { id: "news", icon: "📰", title: "الأخبار", color: "#0ea5e9" },
+    { id: "article", icon: "📚", title: "المقالات", color: "#8b5cf6" },
+    { id: "daily", icon: "📈", title: "التحليل", color: "#22c55e" },
+    { id: "lesson", icon: "🎓", title: "ICT & CRT", color: "#f59e0b" },
+    { id: "webinar", icon: "🎥", title: "الويبينارات", color: "#ef4444" },
+  ].map((item) => (
+    <div
+      key={item.id}
+      onClick={() => setAcademyTab(item.id)}
+      style={{
+        background:
+          academyTab === item.id
+            ? "linear-gradient(180deg,#0b2345,#08162e)"
+            : "#08162e",
+        border:
+          academyTab === item.id
+            ? `1px solid ${item.color}`
+            : "1px solid #17365d",
+        borderRadius: "18px",
+        padding: "18px",
+        cursor: "pointer",
+        textAlign: "center",
+        boxShadow:
+          academyTab === item.id
+            ? `0 0 20px ${item.color}40`
+            : "none",
+      }}
+    >
+      <div style={{ fontSize: "28px", marginBottom: "10px" }}>
+        {item.icon}
+      </div>
 
+      <div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
+        {item.title}
+      </div>
+
+      <div
+        style={{
+          fontSize: "11px",
+          color: "#94a3b8",
+          marginTop: "6px",
+        }}
+      >
+        {item.id === "news"
+          ? news.length
+          : academyPosts.filter((p) => p.type === item.id).length}{" "}
+        محتوى
+      </div>
+    </div>
+  ))}
+</div>
 
       {academyTab === "news" ? (
         news.length === 0 ? (

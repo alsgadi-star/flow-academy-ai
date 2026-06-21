@@ -33,8 +33,6 @@ export default function HomePage() {
   const [news, setNews] = useState<any[]>([]);
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
 
-  const [notifications, setNotifications] = useState<any[]>([]);
-
   const [newSignal, setNewSignal] = useState({
     symbol: "",
     direction: "BUY",
@@ -99,20 +97,9 @@ export default function HomePage() {
   setAcademyPosts(data || []);
 }
 
-   async function loadNotifications() {
-  const { data } = await supabase
-    .from("notifications")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .limit(20);
-
-  setNotifications(data || []);
-}
-
 loadSignals();
 loadNews();
 loadAcademyPosts();
-loadNotifications();
 
   return () => data.subscription.unsubscribe();
 }, []);
@@ -174,17 +161,6 @@ loadNotifications();
     .insert([newsItem]);
 
   if (!error) {
-
-    await supabase
-      .from("notifications")
-      .insert([
-        {
-          title: "خبر اقتصادي جديد",
-          message: newsItem.title,
-          type: "news",
-        },
-      ]);
-
     alert("تمت إضافة الخبر");
 
     setNewsItem({
@@ -616,9 +592,6 @@ return (
     </section>
   )
 )}
-  </section>
-)}
-    
       {tab === "profile" && (
         <section className="card">
           <div className="card-title">
@@ -873,9 +846,9 @@ return (
   </button>
 
   <button
-  className={`navbtn ${tab === "notifications" ? "active" : ""}`}
-  onClick={() => setTab("notifications")}
->
+    className={`navbtn ${tab === "signals" ? "active" : ""}`}
+    onClick={() => setTab("signals")}
+  >
     <Radio size={20} />
     الإشارات
   </button>

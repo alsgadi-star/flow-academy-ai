@@ -305,6 +305,37 @@ async function addAcademyContent() {
   }
 }  
 
+async function updateSubscription() {
+  if (!subscriptionUserId) {
+    alert("أدخل User ID أولاً");
+    return;
+  }
+
+  const { error } = await supabase
+    .from("subscriptions")
+    .upsert(
+      {
+        user_id: subscriptionUserId,
+        plan: subscriptionPlan,
+        status: "active",
+      },
+      {
+        onConflict: "user_id",
+      }
+    );
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  alert("تم تحديث الاشتراك بنجاح");
+
+  setSubscriptionUserId("");
+  setSubscriptionPlan("free");
+}
+
+  
 async function markNotificationAsRead(notificationId: string) {
   await supabase
     .from("notifications")

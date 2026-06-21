@@ -910,14 +910,6 @@ return (
     الأكاديمية
   </button>
         
-<button
-  className={`navbtn ${tab === "notifications" ? "active" : ""}`}
-  onClick={() => setTab("notifications")}
->
-  <Bell size={20} />
-  الإشعارات
-</button>
-        
   {isAdmin && (
     <button
       className={`navbtn ${tab === "admin" ? "active" : ""}`}

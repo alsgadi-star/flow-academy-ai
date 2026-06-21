@@ -363,7 +363,7 @@ const isAdmin = user?.email === "alsgadi@gmail.com";
 const isVIP =
   isAdmin ||
   (subscription?.status === "active" &&
-    ["basic", "pro", "vip"].includes(subscription?.plan));  
+    ["trader", "elite"].includes(subscription?.plan)); 
 return (
   <main className="phone">
       <header className="top">
@@ -892,13 +892,11 @@ return (
           <p>
   الخطة الحالية:{" "}
   <span className="plan">
-    {subscription?.plan === "vip"
-      ? "Flow VIP"
-      : subscription?.plan === "pro"
-      ? "Flow Pro"
-      : subscription?.plan === "basic"
-      ? "Flow Basic"
-      : "Flow Free"}
+    {subscription?.plan === "elite"
+  ? "Flow Elite"
+  : subscription?.plan === "trader"
+  ? "Flow Trader"
+  : "Flow Free"}
   </span>
 </p>
           <button className="btn-dark" onClick={() => setTab("plans")}>ترقية الحساب</button>

@@ -317,8 +317,13 @@ async function addAcademyContent() {
 }  
 
 async function updateSubscription() {
-  if (!subscriptionUserId) {
-    alert("أدخل User ID أولاً");
+  const selectedProfile = profiles.find(
+    (profile) => profile.user_id === subscriptionUserId
+  );
+
+  if (!selectedProfile) {
+    alert("اختر المستخدم من القائمة من جديد");
+    setSubscriptionUserId("");
     return;
   }
 
@@ -326,7 +331,7 @@ async function updateSubscription() {
     .from("subscriptions")
     .upsert(
       {
-        user_id: subscriptionUserId,
+        user_id: selectedProfile.user_id,
         plan: subscriptionPlan,
         status: "active",
       },

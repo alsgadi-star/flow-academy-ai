@@ -319,7 +319,7 @@ async function addAcademyContent() {
 async function updateSubscription() {
   const selectedProfile = profiles.find(
     (profile) =>
-      profile.user_id === subscriptionUserId ||
+      profile.id === subscriptionUserId ||
       profile.full_name === subscriptionUserId ||
       profile.email === subscriptionUserId
   );
@@ -329,13 +329,12 @@ async function updateSubscription() {
     setSubscriptionUserId("");
     return;
   }
-console.log("selectedProfile", selectedProfile);
-console.log("user_id", selectedProfile?.user_id);
+
   const { error } = await supabase
     .from("subscriptions")
     .upsert(
       {
-        user_id: selectedProfile.user_id,
+        user_id: selectedProfile.id,
         plan: subscriptionPlan,
         status: "active",
       },
@@ -1170,18 +1169,13 @@ return (
 
 <select
   value={subscriptionUserId}
-  onChange={(e) => {
-    setSubscriptionUserId(e.target.value);
-  }}
+  onChange={(e) => setSubscriptionUserId(e.target.value)}
 >
   <option value="">اختر المستخدم</option>
 
   {profiles.map((profile) => (
-    <option
-      key={profile.user_id}
-      value={profile.user_id}
-    >
-      {profile.full_name || profile.email || profile.user_id}
+    <option key={profile.id} value={profile.id}>
+      {profile.full_name || profile.email || profile.id}
     </option>
   ))}
 </select>

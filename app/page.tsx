@@ -181,6 +181,7 @@ loadNotifications();
       {
         title: "خبر اقتصادي جديد",
         message: newsItem.title,
+        body: newsItem.content,
         type: "news",
         target_id: insertedNews.id,
         target_table: "news",
@@ -726,7 +727,16 @@ return (
       }}
     >
       <h4>{item.title}</h4>
-      <p>{item.message || item.body}</p>
+
+{item.message && (
+  <p>{item.message}</p>
+)}
+
+{item.body && (
+  <p style={{ color: "#94a3b8" }}>
+    {item.body}
+  </p>
+)}
     </div>
   ))
 )}

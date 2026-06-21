@@ -132,12 +132,49 @@ loadNotifications();
     setUser(null);
   }
   async function addSignal() {
-  const { error } = await supabase
+  const { data: insertedSignal, error } = await supabase
     .from("signals")
-    .insert([newSignal]);
+    .insert([newSignal])
+    .select()
+    .single();
 
   if (!error) {
+    await supabase.from("notifications").insert([
+      {
+        title: "إشارة تداول جديدة",
+        message: `${newSignal.symbol} ${newSignal.direction}`,
+        body: `الدخول: ${newSignal.entry_price} | الستوب: ${newSignal.sl}`,
+        type: "signal",
+        target_id: insertedSignal.id,
+        target_table: "signals",
+      },
+    ]);
+
     alert("تمت إضافة الإشارة");
+
+    const { data } = await supabase
+      .from("signals")
+      .select("*")
+      .order("created_at", { ascending: false });
+
+    setSignals(data || []);
+
+    setNewSignal({
+      symbol: "",
+      direction: "BUY",
+      entry_price: "",
+      sl: "",
+      tp1: "",
+      tp2: "",
+      tp3: "",
+      status: "active",
+      signal_type: "scalp",
+      access: "free",
+    });
+  } else {
+    alert(error.message);
+  }
+}
 
     const { data } = await supabase
       .from("signals")

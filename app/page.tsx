@@ -24,6 +24,7 @@ export default function HomePage() {
   const [selectedPost, setSelectedPost] = useState<any>(null);
   
   const [selectedNews, setSelectedNews] = useState<any>(null);
+  const [selectedSignal, setSelectedSignal] = useState<any>(null);
 
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
@@ -417,7 +418,32 @@ return (
       )}
 
       {tab === "signals" && (
-        <section className="card">
+  selectedSignal ? (
+    <section className="card">
+      <button
+        className="btn-dark"
+        onClick={() => setSelectedSignal(null)}
+        style={{ marginBottom: "15px" }}
+      >
+        ← رجوع
+      </button>
+
+      <h2>
+        {selectedSignal.symbol} {selectedSignal.direction}
+      </h2>
+
+      <p>الدخول: {selectedSignal.entry_price}</p>
+      <p>وقف الخسارة: {selectedSignal.sl}</p>
+      <p>TP1: {selectedSignal.tp1}</p>
+      <p>TP2: {selectedSignal.tp2}</p>
+      <p>TP3: {selectedSignal.tp3}</p>
+
+      {selectedSignal.access === "vip" && (
+        <span style={{ color: "#facc15" }}>VIP</span>
+      )}
+    </section>
+  ) : (
+    <section className="card">
           <div className="card-title">
             <div className="icon"><Radio size={23} /></div>
             <h3>الإشارات</h3>
@@ -497,7 +523,8 @@ return (
             })
           )}
         </section>
-      )}
+      )
+)}
 
       {tab === "performance" && (
         <section className="card">

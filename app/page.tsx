@@ -1166,7 +1166,7 @@ return (
   <option value="">اختر المستخدم</option>
 
   {profiles.map((profile) => (
-    <option key={profile.user_id} value={profile.user_id}>
+    <option key={profile.user_id} value={profile.full_name}>
       {profile.full_name || profile.email || profile.user_id}
     </option>
   ))}

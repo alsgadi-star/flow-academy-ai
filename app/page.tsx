@@ -1159,12 +1159,18 @@ return (
 
 <h3>إدارة الاشتراكات</h3>
 
-<input
-  placeholder="User ID"
+<select
   value={subscriptionUserId}
   onChange={(e) => setSubscriptionUserId(e.target.value)}
-/>
+>
+  <option value="">اختر المستخدم</option>
 
+  {profiles.map((profile) => (
+    <option key={profile.id} value={profile.id}>
+      {profile.email || profile.full_name || profile.id}
+    </option>
+  ))}
+</select>
 <select
   value={subscriptionPlan}
   onChange={(e) => setSubscriptionPlan(e.target.value)}

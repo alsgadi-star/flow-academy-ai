@@ -606,34 +606,6 @@ return (
   )
 )}
 
-    {tab === "notifications" && (
-  <section className="card">
-    <div className="card-title">
-      <div className="icon">
-        <Bell size={23} />
-      </div>
-      <h3>الإشعارات</h3>
-    </div>
-
-    {notifications.length === 0 ? (
-      <div className="result">
-        لا توجد إشعارات حالياً
-      </div>
-    ) : (
-      notifications.map((item) => (
-        <div
-          key={item.id}
-          className="result"
-          style={{ marginBottom: "12px" }}
-        >
-          <h4>{item.title}</h4>
-          <p>{item.message || item.body}</p>
-        </div>
-      ))
-    )}
-  </section>
-)}
-    
       {tab === "profile" && (
         <section className="card">
           <div className="card-title">

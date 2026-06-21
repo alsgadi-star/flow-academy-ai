@@ -264,6 +264,22 @@ async function addAcademyContent() {
     alert(error.message);
   }
 }  
+
+async function markNotificationAsRead(notificationId: string) {
+  await supabase
+    .from("notifications")
+    .update({ is_read: true })
+    .eq("id", notificationId);
+
+  setNotifications((prev) =>
+    prev.map((item) =>
+      item.id === notificationId
+        ? { ...item, is_read: true }
+        : item
+    )
+  );
+}
+
   
   async function analyze() {
     if (!file) return setResult("ارفع صورة الشارت أولاً.");

@@ -1166,18 +1166,26 @@ return (
 
 <select
   value={subscriptionUserId}
-  onChange={(e) => setSubscriptionUserId(e.target.value)}
+  onChange={(e) => {
+    setSubscriptionUserId(e.target.value);
+  }}
 >
   <option value="">اختر المستخدم</option>
 
   {profiles.map((profile) => (
-    <option key={profile.user_id} value={profile.user_id}>
+    <option
+      key={profile.user_id}
+      value={profile.user_id}
+    >
       {profile.full_name || profile.email || profile.user_id}
     </option>
   ))}
 </select>
 
-<p>{subscriptionUserId}</p>
+<p style={{ color: "#facc15", fontSize: "12px" }}>
+  {subscriptionUserId}
+</p>
+
 <select
   value={subscriptionPlan}
   onChange={(e) => setSubscriptionPlan(e.target.value)}

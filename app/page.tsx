@@ -510,23 +510,24 @@ return (
   {item.icon}
 </div>
 
-<div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
-  {item.title}
-</div>
+<>
+  <div style={{ fontWeight: 700, fontSize: "14px", color: "#fff" }}>
+    {item.title}
+  </div>
 
-<p
-  style={{
-    fontSize: "11px",
-    color: "#94a3b8",
-    marginTop: "6px",
-    marginBottom: 0,
-  }}
->
-  {item.id === "news"
-    ? news.length
-    : academyPosts.filter((p) => p.type === item.id).length}
-  {" "}محتوى
-</p>
+  <div
+    style={{
+      fontSize: "11px",
+      color: "#94a3b8",
+      marginTop: "6px",
+    }}
+  >
+    {item.id === "news"
+      ? news.length
+      : academyPosts.filter((p) => p.type === item.id).length}{" "}
+    محتوى
+  </div>
+</>
 
       {academyTab === "news" ? (
         news.length === 0 ? (

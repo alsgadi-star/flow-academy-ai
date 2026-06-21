@@ -1176,6 +1176,7 @@ return (
     </option>
   ))}
 </select>
+    <p>{subscriptionUserId}</p>
 <select
   value={subscriptionPlan}
   onChange={(e) => setSubscriptionPlan(e.target.value)}

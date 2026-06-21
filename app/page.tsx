@@ -318,7 +318,10 @@ async function addAcademyContent() {
 
 async function updateSubscription() {
   const selectedProfile = profiles.find(
-    (profile) => profile.user_id === subscriptionUserId
+    (profile) =>
+      profile.user_id === subscriptionUserId ||
+      profile.full_name === subscriptionUserId ||
+      profile.email === subscriptionUserId
   );
 
   if (!selectedProfile) {

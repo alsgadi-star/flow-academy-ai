@@ -195,15 +195,23 @@ async function addAcademyContent() {
   .single();
 
   if (!error) {
-  await supabase.from("notifications").insert([
-    {
-      title: "محتوى جديد في الأكاديمية",
-      message: academyItem.title,
-      type: academyItem.type,
-      target_id: insertedPost.id,
-      target_table: "academy_posts",
-    },
-  ]);
+
+  const { error: notificationError } = await supabase
+    .from("notifications")
+    .insert([
+      {
+        title: "محتوى جديد في الأكاديمية",
+        message: academyItem.title,
+        type: academyItem.type,
+        target_id: insertedPost.id,
+        target_table: "academy_posts",
+      },
+    ]);
+
+  if (notificationError) {
+    alert(notificationError.message);
+    return;
+  }
 
   alert("تمت إضافة محتوى الأكاديمية");
     const { data } = await supabase

@@ -1180,9 +1180,6 @@ return (
   ))}
 </select>
 
-<p style={{ color: "#facc15", fontSize: "12px" }}>
-  {subscriptionUserId}
-</p>
 
 <select
   value={subscriptionPlan}

@@ -767,10 +767,16 @@ return (
       key={item.id}
       className="result"
       onClick={() => {
-        if (item.target_table === "academy_posts") {
-          const post = academyPosts.find(
-            (p) => String(p.id) === String(item.target_id)
-          );
+        if (item.target_table === "signals") {
+  const signal = signals.find(
+    (s) => String(s.id) === String(item.target_id)
+  );
+
+  if (signal) {
+    setSelectedSignal(signal);
+    setTab("signals");
+  }
+}
 
           if (post) {
             setSelectedPost(post);

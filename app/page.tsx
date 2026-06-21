@@ -38,6 +38,9 @@ export default function HomePage() {
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
 
   const [notifications, setNotifications] = useState<any[]>([]);
+  const hasUnreadNotifications = notifications.some(
+  (item) => item.is_read !== true
+);
 
   const [newSignal, setNewSignal] = useState({
     symbol: "",
@@ -340,7 +343,7 @@ return (
     >
       <Bell size={18} />
 
-      {notifications.length > 0 && (
+      {hasUnreadNotifications && (
         <span
           style={{
             position: "absolute",

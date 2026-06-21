@@ -329,7 +329,8 @@ async function updateSubscription() {
     setSubscriptionUserId("");
     return;
   }
-
+console.log("selectedProfile", selectedProfile);
+console.log("user_id", selectedProfile?.user_id);
   const { error } = await supabase
     .from("subscriptions")
     .upsert(

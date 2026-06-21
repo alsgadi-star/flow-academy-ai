@@ -260,15 +260,57 @@ const isVIP = isAdmin;
 return (
   <main className="phone">
       <header className="top">
-        <div className="brand">
-          <div className="logo">F</div>
-          <div>
-            <h1>Flow Academy AI</h1>
-            <p className="sub">محلل ICT عربي</p>
-          </div>
-        </div>
-        <div className="pill">Free</div>
-      </header>
+  <div className="brand">
+    <div className="logo">F</div>
+    <div>
+      <h1>Flow Academy AI</h1>
+      <p className="sub">محلل ICT عربي</p>
+    </div>
+  </div>
+
+  <div
+    style={{
+      display: "flex",
+      alignItems: "center",
+      gap: "10px",
+    }}
+  >
+    <button
+      onClick={() => setTab("notifications")}
+      style={{
+        position: "relative",
+        background: "#08162e",
+        border: "1px solid #17365d",
+        width: "42px",
+        height: "42px",
+        borderRadius: "50%",
+        color: "#fff",
+        cursor: "pointer",
+        display: "grid",
+        placeItems: "center",
+      }}
+    >
+      <Bell size={18} />
+
+      {notifications.length > 0 && (
+        <span
+          style={{
+            position: "absolute",
+            top: "6px",
+            right: "7px",
+            width: "9px",
+            height: "9px",
+            background: "#ef4444",
+            borderRadius: "50%",
+            border: "2px solid #08162e",
+          }}
+        />
+      )}
+    </button>
+
+    <div className="pill">Free</div>
+  </div>
+</header>
 
       {tab === "home" && (
         <>

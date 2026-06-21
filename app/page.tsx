@@ -134,7 +134,24 @@ if (session?.user) {
     .eq("user_id", userId)
     .maybeSingle();
 
-  setSubscription(data);
+  if (data) {
+    setSubscription(data);
+    return;
+  }
+
+  const { data: newSubscription } = await supabase
+    .from("subscriptions")
+    .insert([
+      {
+        user_id: userId,
+        plan: "free",
+        status: "active",
+      },
+    ])
+    .select()
+    .single();
+
+  setSubscription(newSubscription);
 }
 
 loadSignals();

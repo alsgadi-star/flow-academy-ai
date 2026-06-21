@@ -33,6 +33,8 @@ export default function HomePage() {
   const [news, setNews] = useState<any[]>([]);
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
 
+  const [notifications, setNotifications] = useState<any[]>([]);
+
   const [newSignal, setNewSignal] = useState({
     symbol: "",
     direction: "BUY",
@@ -97,9 +99,20 @@ export default function HomePage() {
   setAcademyPosts(data || []);
 }
 
+   async function loadNotifications() {
+  const { data } = await supabase
+    .from("notifications")
+    .select("*")
+    .order("created_at", { ascending: false })
+    .limit(20);
+
+  setNotifications(data || []);
+}
+
 loadSignals();
 loadNews();
 loadAcademyPosts();
+loadNotifications();
 
   return () => data.subscription.unsubscribe();
 }, []);

@@ -766,41 +766,42 @@ return (
     <div
       key={item.id}
       className="result"
-      onClick={() => {
-        if (item.target_table === "signals") {
-  const signal = signals.find(
-    (s) => String(s.id) === String(item.target_id)
-  );
+    onClick={() => {
+  if (item.target_table === "signals") {
+    const signal = signals.find(
+      (s) => String(s.id) === String(item.target_id)
+    );
 
-  if (signal) {
-    setSelectedSignal(signal);
-    setTab("signals");
+    if (signal) {
+      setSelectedSignal(signal);
+      setTab("signals");
+    }
   }
-}
 
-          if (post) {
-            setSelectedPost(post);
-            setAcademyTab(post.type);
-            setTab("academy");
-          }
-        }
+  if (item.target_table === "academy_posts") {
+    const post = academyPosts.find(
+      (p) => String(p.id) === String(item.target_id)
+    );
 
-       if (item.target_table === "news") {
-  const newsItem = news.find(
-    (n) => String(n.id) === String(item.target_id)
-  );
-
-  if (newsItem) {
-    setSelectedNews(newsItem);
-    setAcademyTab("news");
-    setTab("academy");
+    if (post) {
+      setSelectedPost(post);
+      setAcademyTab(post.type);
+      setTab("academy");
+    }
   }
-}
 
-        if (item.type === "signal") {
-          setTab("signals");
-        }
-      }}
+  if (item.target_table === "news") {
+    const newsItem = news.find(
+      (n) => String(n.id) === String(item.target_id)
+    );
+
+    if (newsItem) {
+      setSelectedNews(newsItem);
+      setAcademyTab("news");
+      setTab("academy");
+    }
+  }
+}}
       style={{
         marginBottom: "12px",
         cursor: "pointer",

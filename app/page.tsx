@@ -161,6 +161,17 @@ loadAcademyPosts();
     .insert([newsItem]);
 
   if (!error) {
+
+    await supabase
+      .from("notifications")
+      .insert([
+        {
+          title: "خبر اقتصادي جديد",
+          message: newsItem.title,
+          type: "news",
+        },
+      ]);
+
     alert("تمت إضافة الخبر");
 
     setNewsItem({

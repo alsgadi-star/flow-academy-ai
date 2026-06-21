@@ -889,7 +889,18 @@ return (
           </div>
           <p>{user.user_metadata?.full_name}</p>
           <p>{user.email}</p>
-          <p>الخطة الحالية: <span className="plan">Flow Free</span></p>
+          <p>
+  الخطة الحالية:{" "}
+  <span className="plan">
+    {subscription?.plan === "vip"
+      ? "Flow VIP"
+      : subscription?.plan === "pro"
+      ? "Flow Pro"
+      : subscription?.plan === "basic"
+      ? "Flow Basic"
+      : "Flow Free"}
+  </span>
+</p>
           <button className="btn-dark" onClick={() => setTab("plans")}>ترقية الحساب</button>
           <button className="logout" onClick={logout}>تسجيل خروج</button>
         </section>

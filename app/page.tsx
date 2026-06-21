@@ -1171,12 +1171,13 @@ return (
   <option value="">اختر المستخدم</option>
 
   {profiles.map((profile) => (
-    <option key={profile.user_id} value={profile.full_name}>
+    <option key={profile.user_id} value={profile.user_id}>
       {profile.full_name || profile.email || profile.user_id}
     </option>
   ))}
 </select>
-    <p>{subscriptionUserId}</p>
+
+<p>{subscriptionUserId}</p>
 <select
   value={subscriptionPlan}
   onChange={(e) => setSubscriptionPlan(e.target.value)}

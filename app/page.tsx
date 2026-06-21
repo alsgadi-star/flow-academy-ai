@@ -37,6 +37,8 @@ export default function HomePage() {
   const [news, setNews] = useState<any[]>([]);
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
 
+  const [subscriptionUserId, setSubscriptionUserId] = useState("");
+  const [subscriptionPlan, setSubscriptionPlan] = useState("free");
   const [notifications, setNotifications] = useState<any[]>([]);
   const [subscription, setSubscription] = useState<any>(null);
   const hasUnreadNotifications = notifications.some(
@@ -1109,6 +1111,32 @@ return (
 
 <button className="btn" onClick={addAcademyContent}>
   إضافة محتوى
+</button>
+
+<hr style={{ margin: "20px 0" }} />
+
+<h3>إدارة الاشتراكات</h3>
+
+<input
+  placeholder="User ID"
+  value={subscriptionUserId}
+  onChange={(e) => setSubscriptionUserId(e.target.value)}
+/>
+
+<select
+  value={subscriptionPlan}
+  onChange={(e) => setSubscriptionPlan(e.target.value)}
+>
+  <option value="free">Flow Free</option>
+  <option value="trader">Flow Trader</option>
+  <option value="elite">Flow Elite</option>
+</select>
+
+<button
+  className="btn"
+  onClick={updateSubscription}
+>
+  تحديث الاشتراك
 </button>
     
   </section>

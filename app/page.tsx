@@ -516,64 +516,68 @@ return (
         ))}
       </div>
 
-    {academyTab === "news" ? (
-  news.length === 0 ? (
-    <div className="result">لا توجد أخبار حالياً</div>
-  ) : (
-    news.map((item) => (
-      <div key={item.id} className="result">
-        <h4>{item.title}</h4>
-        <p>{item.content}</p>
-      </div>
-    ))
-  )
-) : (
-  academyPosts
-    .filter((post) => post.type === academyTab)
-    .map((post) => {
-      const locked = post.access === "vip" && !isVIP;
+      {academyTab === "news" ? (
+        news.length === 0 ? (
+          <div className="result">لا توجد أخبار حالياً</div>
+        ) : (
+          news.map((item) => (
+            <div key={item.id} className="result">
+              <h4>{item.title}</h4>
+              <p>{item.content}</p>
+            </div>
+          ))
+        )
+      ) : academyPosts.filter((post) => post.type === academyTab).length === 0 ? (
+        <div className="result">لا يوجد محتوى حالياً</div>
+      ) : (
+        academyPosts
+          .filter((post) => post.type === academyTab)
+          .map((post) => {
+            const locked = post.access === "vip" && !isVIP;
 
-      return (
-        <div
-          key={post.id}
-          className="result"
-          onClick={() => {
-            if (!locked) setSelectedPost(post);
-          }}
-          style={{ cursor: locked ? "default" : "pointer" }}
-        >
-          <h4>{post.title}</h4>
-
-          {locked ? (
-            <>
-              <p>🔒 محتوى VIP</p>
-
-              <button
-                className="btn"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setTab("plans");
+            return (
+              <div
+                key={post.id}
+                className="result"
+                onClick={() => {
+                  if (!locked) {
+                    setSelectedPost(post);
+                  }
                 }}
+                style={{ cursor: locked ? "default" : "pointer" }}
               >
-                ترقية الحساب
-              </button>
-            </>
-          ) : (
-            <>
-              <p>{post.excerpt || post.content}</p>
+                <h4>{post.title}</h4>
 
-              {post.access === "vip" && (
-                <span style={{ color: "#facc15" }}>
-                  VIP
-                </span>
-              )}
-            </>
-          )}
-        </div>
-      );
-    })
-)
-}
+                {locked ? (
+                  <>
+                    <p>🔒 محتوى VIP</p>
+
+                    <button
+                      className="btn"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setTab("plans");
+                      }}
+                    >
+                      ترقية الحساب
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <p>{post.excerpt || post.content}</p>
+
+                    {post.access === "vip" && (
+                      <span style={{ color: "#facc15" }}>VIP</span>
+                    )}
+                  </>
+                )}
+              </div>
+            );
+          })
+      )}
+    </section>
+  )
+)}
       {tab === "profile" && (
         <section className="card">
           <div className="card-title">

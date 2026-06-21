@@ -170,11 +170,23 @@ loadNotifications();
   }
 
   async function addNews() {
-  const { error } = await supabase
+  const { data: insertedNews, error } = await supabase
     .from("news")
-    .insert([newsItem]);
+    .insert([newsItem])
+    .select()
+    .single();
 
   if (!error) {
+    await supabase.from("notifications").insert([
+      {
+        title: "خبر اقتصادي جديد",
+        message: newsItem.title,
+        type: "news",
+        target_id: insertedNews.id,
+        target_table: "news",
+      },
+    ]);
+
     alert("تمت إضافة الخبر");
 
     setNewsItem({

@@ -195,8 +195,17 @@ async function addAcademyContent() {
   .single();
 
   if (!error) {
-    alert("تمت إضافة محتوى الأكاديمية");
+  await supabase.from("notifications").insert([
+    {
+      title: "محتوى جديد في الأكاديمية",
+      message: academyItem.title,
+      type: academyItem.type,
+      target_id: insertedPost.id,
+      target_table: "academy_posts",
+    },
+  ]);
 
+  alert("تمت إضافة محتوى الأكاديمية");
     const { data } = await supabase
       .from("academy_posts")
       .select("*")

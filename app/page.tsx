@@ -22,6 +22,8 @@ export default function HomePage() {
   const [tab, setTab] = useState("home");
   const [academyTab, setAcademyTab] = useState("news");
   const [selectedPost, setSelectedPost] = useState<any>(null);
+  
+  const [selectedNews, setSelectedNews] = useState<any>(null);
 
   const [file, setFile] = useState<File | null>(null);
   const [preview, setPreview] = useState("");
@@ -498,7 +500,29 @@ return (
       )}
 
 {tab === "academy" && (
-  selectedPost ? (
+  selectedNews ? (
+    <section className="card">
+      <button
+        className="btn-dark"
+        onClick={() => setSelectedNews(null)}
+        style={{ marginBottom: "15px" }}
+      >
+        ← رجوع
+      </button>
+
+      <h2>{selectedNews.title}</h2>
+
+      <div
+        style={{
+          whiteSpace: "pre-wrap",
+          lineHeight: "1.9",
+          color: "#cbd5e1",
+        }}
+      >
+        {selectedNews.content}
+      </div>
+    </section>
+  ) : selectedPost ? (
     <section className="card">
       <button
         className="btn-dark"

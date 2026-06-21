@@ -38,6 +38,7 @@ export default function HomePage() {
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
 
   const [notifications, setNotifications] = useState<any[]>([]);
+  const [subscription, setSubscription] = useState<any>(null);
   const hasUnreadNotifications = notifications.some(
   (item) => item.is_read !== true
 );
@@ -322,8 +323,10 @@ if (!user) {
 }
 
 const isAdmin = user?.email === "alsgadi@gmail.com";
-const isVIP = isAdmin;
-  
+const isVIP =
+  isAdmin ||
+  (subscription?.status === "active" &&
+    ["basic", "pro", "vip"].includes(subscription?.plan));  
 return (
   <main className="phone">
       <header className="top">

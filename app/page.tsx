@@ -4,6 +4,11 @@ import { useEffect, useState } from "react";
 import SignalsPage from "./components/SignalsPage";
 import AcademyPage from "./components/AcademyPage";
 import AdminPage from "./components/AdminPage";
+import {
+  loadSignals,
+  createSignal,
+  createSignalNotification,
+} from "./services/signals";
 import { supabase } from "../lib/supabase";
 import {
   UploadCloud,
@@ -95,14 +100,7 @@ if (session?.user) {
 }
   });
 
-  async function loadSignals() {
-    const { data } = await supabase
-      .from("signals")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    setSignals(data || []);
-  }
+  
 
   async function loadNews() {
     const { data } = await supabase

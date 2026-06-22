@@ -167,8 +167,7 @@ if (session?.user) {
   setProfiles(data || []);
 }
 
-loadSignals();
-loadNews();
+loadSignals().then(setSignals);loadNews();
 loadAcademyPosts();
 loadNotifications();
 loadProfiles();
@@ -188,32 +187,15 @@ loadProfiles();
     setUser(null);
   }
  async function addSignal() {
-  const { data: insertedSignal, error } = await supabase
-    .from("signals")
-    .insert([newSignal])
-    .select()
-    .single();
+  try {
+    const insertedSignal = await createSignal(newSignal);
 
-  if (!error) {
-    await supabase.from("notifications").insert([
-      {
-        title: "إشارة تداول جديدة",
-        message: `${newSignal.symbol} ${newSignal.direction}`,
-        body: `الدخول: ${newSignal.entry_price} | الستوب: ${newSignal.sl}`,
-        type: "signal",
-        target_id: insertedSignal.id,
-        target_table: "signals",
-      },
-    ]);
+    await createSignalNotification(insertedSignal);
 
     alert("تمت إضافة الإشارة");
 
-    const { data } = await supabase
-      .from("signals")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    setSignals(data || []);
+    const updatedSignals = await loadSignals();
+    setSignals(updatedSignals);
 
     setNewSignal({
       symbol: "",
@@ -227,7 +209,7 @@ loadProfiles();
       signal_type: "scalp",
       access: "free",
     });
-  } else {
+  } catch (error: any) {
     alert(error.message);
   }
 }

@@ -12,11 +12,6 @@ import {
   deleteSignalProvider,
 } from "./services/providerSignals";
 
-import {
-  loadProviderSignals,
-  loadSignalProviders,
-} from "./services/providerSignals";
-
 
 import {
   loadNotifications,

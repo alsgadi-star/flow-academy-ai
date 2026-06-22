@@ -116,15 +116,7 @@ if (session?.user) {
   
 
 
-   async function loadAcademyPosts() {
-  const { data } = await supabase
-    .from("academy_posts")
-    .select("*")
-    .order("created_at", { ascending: false });
-
-  setAcademyPosts(data || []);
-}
-
+   
    async function loadNotifications() {
   const { data } = await supabase
     .from("notifications")

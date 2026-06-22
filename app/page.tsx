@@ -298,6 +298,52 @@ async function markNotificationAsRead(notificationId: string) {
     alert(error.message);
   }
 }
+
+
+async function addProvider() {
+  try {
+    await createSignalProvider(newProvider);
+
+    const updatedProviders = await loadSignalProviders();
+    setSignalProviders(updatedProviders);
+
+    setNewProvider({
+      name: "",
+      telegram_channel: "",
+      display_order: 0,
+      is_active: true,
+    });
+
+    alert("تمت إضافة القناة");
+  } catch (error: any) {
+    alert(error.message);
+  }
+}
+
+async function toggleProvider(provider: any) {
+  try {
+    await updateSignalProvider(provider.id, {
+      is_active: !provider.is_active,
+    });
+
+    const updatedProviders = await loadSignalProviders();
+    setSignalProviders(updatedProviders);
+  } catch (error: any) {
+    alert(error.message);
+  }
+}
+
+async function removeProvider(providerId: string) {
+  try {
+    await deleteSignalProvider(providerId);
+
+    const updatedProviders = await loadSignalProviders();
+    setSignalProviders(updatedProviders);
+  } catch (error: any) {
+    alert(error.message);
+  }
+}
+
   
   async function analyze() {
     if (!file) return setResult("ارفع صورة الشارت أولاً.");
@@ -595,23 +641,29 @@ return (
         </section>
       )}
     {isAdmin && tab === "admin" && (
-  <AdminPage
-    newSignal={newSignal}
-    setNewSignal={setNewSignal}
-    addSignal={addSignal}
-    newsItem={newsItem}
-    setNewsItem={setNewsItem}
-    addNews={addNews}
-    academyItem={academyItem}
-    setAcademyItem={setAcademyItem}
-    addAcademyContent={addAcademyContent}
-    profiles={profiles}
-    subscriptionUserId={subscriptionUserId}
-    setSubscriptionUserId={setSubscriptionUserId}
-    subscriptionPlan={subscriptionPlan}
-    setSubscriptionPlan={setSubscriptionPlan}
-    updateSubscription={updateSubscription}
-  />
+<AdminPage
+  newSignal={newSignal}
+  setNewSignal={setNewSignal}
+  addSignal={addSignal}
+  newsItem={newsItem}
+  setNewsItem={setNewsItem}
+  addNews={addNews}
+  academyItem={academyItem}
+  setAcademyItem={setAcademyItem}
+  addAcademyContent={addAcademyContent}
+  profiles={profiles}
+  subscriptionUserId={subscriptionUserId}
+  setSubscriptionUserId={setSubscriptionUserId}
+  subscriptionPlan={subscriptionPlan}
+  setSubscriptionPlan={setSubscriptionPlan}
+  updateSubscription={updateSubscription}
+  signalProviders={signalProviders}
+  newProvider={newProvider}
+  setNewProvider={setNewProvider}
+  addProvider={addProvider}
+  toggleProvider={toggleProvider}
+  removeProvider={removeProvider}
+/>
 )}
     
       {tab === "plans" && (

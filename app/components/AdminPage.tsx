@@ -191,13 +191,49 @@ removeProvider,
       )}
 
       {adminTab === "radar" && (
-        <div style={{ display: "grid", gap: "12px" }}>
-          <h3>إدارة Market Radar</h3>
-          <div className="result">
-            هنا نضيف إدارة القنوات بالخطوة الجاية.
-          </div>
-        </div>
-      )}
+  <div style={{ display: "grid", gap: "12px" }}>
+    <h3>إدارة Market Radar</h3>
+
+    <input
+      placeholder="اسم القناة"
+      value={newProvider.name}
+      onChange={(e) =>
+        setNewProvider({ ...newProvider, name: e.target.value })
+      }
+    />
+
+    <input
+      placeholder="@channel"
+      value={newProvider.telegram_channel}
+      onChange={(e) =>
+        setNewProvider({
+          ...newProvider,
+          telegram_channel: e.target.value,
+        })
+      }
+    />
+
+    <button className="btn" onClick={addProvider}>
+      إضافة قناة
+    </button>
+
+    {signalProviders.map((provider) => (
+      <div key={provider.id} className="result">
+        <h4>{provider.name}</h4>
+        <p>{provider.telegram_channel}</p>
+        <p>{provider.is_active ? "🟢 مفعلة" : "🔴 معطلة"}</p>
+
+        <button className="btn-dark" onClick={() => toggleProvider(provider)}>
+          {provider.is_active ? "تعطيل" : "تفعيل"}
+        </button>
+
+        <button className="logout" onClick={() => removeProvider(provider.id)}>
+          حذف
+        </button>
+      </div>
+    ))}
+  </div>
+)}
 
       {adminTab === "subscriptions" && (
         <div style={{ display: "grid", gap: "12px" }}>

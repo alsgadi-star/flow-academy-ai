@@ -5,10 +5,12 @@ import SignalsPage from "./components/SignalsPage";
 import AcademyPage from "./components/AcademyPage";
 import AdminPage from "./components/AdminPage";
 import {
-  loadSignals,
-  createSignal,
-  createSignalNotification,
-} from "./services/signals";
+  loadProviderSignals,
+  loadSignalProviders,
+  createSignalProvider,
+  updateSignalProvider,
+  deleteSignalProvider,
+} from "./services/providerSignals";
 
 import {
   loadProviderSignals,

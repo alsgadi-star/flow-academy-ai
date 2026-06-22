@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Radio, List, MessageSquare } from "lucide-react";
+import { Radio, Radar, Star } from "lucide-react";
 
 type SignalsPageProps = {
   signals: any[];
@@ -18,7 +18,7 @@ export default function SignalsPage({
   setSelectedSignal,
   setTab,
 }: SignalsPageProps) {
-  const [signalsTab, setSignalsTab] = useState("chat");
+  const [signalsTab, setSignalsTab] = useState("radar");
 
   if (selectedSignal) {
     return (
@@ -60,35 +60,43 @@ export default function SignalsPage({
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "8px",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "10px",
           marginBottom: "18px",
         }}
       >
         <button
-          className={signalsTab === "chat" ? "btn" : "btn-dark"}
-          onClick={() => setSignalsTab("chat")}
+          className={signalsTab === "radar" ? "btn" : "btn-dark"}
+          onClick={() => setSignalsTab("radar")}
         >
-          <MessageSquare size={16} /> Signal Chat
+          <Radar size={16} /> Market Radar
         </button>
 
         <button
-          className={signalsTab === "providers" ? "btn" : "btn-dark"}
-          onClick={() => setSignalsTab("providers")}
+          className={signalsTab === "vip" ? "btn" : "btn-dark"}
+          onClick={() => setSignalsTab("vip")}
         >
-          <List size={16} /> القنوات
-        </button>
-
-        <button
-          className={signalsTab === "private" ? "btn" : "btn-dark"}
-          onClick={() => setSignalsTab("private")}
-        >
-          <Radio size={16} /> إشارات خاصة
+          <Star size={16} /> Flow VIP
         </button>
       </div>
 
-      {signalsTab === "chat" && (
+      {signalsTab === "radar" && (
         <>
+          <div
+            className="result"
+            style={{
+              marginBottom: "14px",
+              background: "#061225",
+              border: "1px solid #17365d",
+            }}
+          >
+            <h4>Market Radar</h4>
+            <p>
+              مراقبة إشارات القنوات الاحترافية. عدد القنوات المفعلة:{" "}
+              {signalProviders.length}
+            </p>
+          </div>
+
           {providerSignals.length === 0 ? (
             <div className="result">لا توجد إشارات قنوات حالياً</div>
           ) : (
@@ -112,9 +120,10 @@ export default function SignalsPage({
                     marginBottom: "14px",
                   }}
                 >
-                  <strong style={{ color: "#2388ff" }}>
-                    📩 {item.provider_name}
+                  <strong style={{ color: "#38bdf8" }}>
+                    📡 {item.provider_name}
                   </strong>
+
                   <span style={{ color: "#64748b", fontSize: "12px" }}>
                     {item.created_at
                       ? new Date(item.created_at).toLocaleTimeString("ar-IQ", {
@@ -140,41 +149,22 @@ export default function SignalsPage({
         </>
       )}
 
-      {signalsTab === "providers" && (
+      {signalsTab === "vip" && (
         <>
-          {signalProviders.length === 0 ? (
-            <div className="result">لا توجد قنوات مفعلة حالياً</div>
-          ) : (
-            signalProviders.map((provider) => (
-              <div
-                key={provider.id}
-                className="result"
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  gap: "12px",
-                }}
-              >
-                <div>
-                  <h4>{provider.name}</h4>
-                  <p>{provider.telegram_channel}</p>
-                </div>
+          <div
+            className="result"
+            style={{
+              marginBottom: "14px",
+              background: "#111827",
+              border: "1px solid #facc15",
+            }}
+          >
+            <h4>Flow VIP</h4>
+            <p>إشارات أكاديمية فلو الرسمية والحصرية.</p>
+          </div>
 
-                <div style={{ textAlign: "center" }}>
-                  <b>{provider.win_rate || 0}%</b>
-                  <p>نسبة النجاح</p>
-                </div>
-              </div>
-            ))
-          )}
-        </>
-      )}
-
-      {signalsTab === "private" && (
-        <>
           {signals.length === 0 ? (
-            <div className="result">لا توجد إشارات خاصة حالياً</div>
+            <div className="result">لا توجد إشارات VIP حالياً</div>
           ) : (
             signals.map((signal) => {
               const isVip = signal.access === "vip";
@@ -211,7 +201,10 @@ export default function SignalsPage({
                   }}
                 >
                   <div
-                    style={{ display: "flex", justifyContent: "space-between" }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                    }}
                   >
                     <span style={{ color: statusColor }}>{statusLabel}</span>
                     {isVip && <span style={{ color: "#facc15" }}>VIP</span>}

@@ -109,14 +109,6 @@ if (session?.user) {
 
   
 
-  async function loadNews() {
-    const { data } = await supabase
-      .from("news")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    setNews(data || []);
-  }
 
    async function loadAcademyPosts() {
   const { data } = await supabase

@@ -20,9 +20,27 @@ type AdminPageProps = {
   subscriptionPlan: string;
   setSubscriptionPlan: (value: string) => void;
   updateSubscription: () => void;
+
+  signalProviders: any[];
+
+newProvider: any;
+setNewProvider: (value: any) => void;
+
+addProvider: () => void;
+toggleProvider: (provider: any) => void;
+removeProvider: (providerId: string) => void;
 };
 
 export default function AdminPage({
+
+  signalProviders,
+
+newProvider,
+setNewProvider,
+
+addProvider,
+toggleProvider,
+removeProvider,
   newSignal,
   setNewSignal,
   addSignal,

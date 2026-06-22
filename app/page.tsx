@@ -449,6 +449,8 @@ return (
       {tab === "signals" && (
   <SignalsPage
     signals={signals}
+    providerSignals={providerSignals}
+    signalProviders={signalProviders}
     selectedSignal={selectedSignal}
     setSelectedSignal={setSelectedSignal}
     setTab={setTab}

@@ -74,6 +74,13 @@ export default function HomePage() {
 
 const [providerSignals, setProviderSignals] = useState<any[]>([]);
 const [signalProviders, setSignalProviders] = useState<any[]>([]);
+
+const [newProvider, setNewProvider] = useState({
+  name: "",
+  telegram_channel: "",
+  display_order: 0,
+  is_active: true,
+});
   
   const [signals, setSignals] = useState<any[]>([]);
   const [news, setNews] = useState<any[]>([]);

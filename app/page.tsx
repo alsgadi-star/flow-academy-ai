@@ -11,6 +11,12 @@ import {
 } from "./services/signals";
 
 import {
+  loadNotifications,
+  markNotificationAsReadById,
+} from "./services/notifications";
+
+
+import {
   loadSubscription,
   updateUserSubscription,
 } from "./services/subscriptions";
@@ -120,20 +126,6 @@ if (session?.user) {
 
   
 
-
-   
-   async function loadNotifications() {
-  const { data } = await supabase
-    .from("notifications")
-    .select("*")
-    .order("created_at", { ascending: false })
-    .limit(20);
-
-  setNotifications(data || []);
-}
-
-   
-
    async function loadProfiles() {
   const { data } = await supabase
     .from("profiles")
@@ -146,7 +138,7 @@ if (session?.user) {
 loadSignals().then(setSignals);
 loadNews().then(setNews);
 loadAcademyPosts().then(setAcademyPosts);
-loadNotifications();
+loadNotifications().then(setNotifications);
 loadProfiles();
 
   return () => data.subscription.unsubscribe();
@@ -274,20 +266,18 @@ async function updateSubscription() {
 
   
 async function markNotificationAsRead(notificationId: string) {
-  await supabase
-    .from("notifications")
-    .update({ is_read: true })
-    .eq("id", notificationId);
+  try {
+    await markNotificationAsReadById(notificationId);
 
-  setNotifications((prev) =>
-    prev.map((item) =>
-      item.id === notificationId
-        ? { ...item, is_read: true }
-        : item
-    )
-  );
+    setNotifications((prev) =>
+      prev.map((item) =>
+        item.id === notificationId ? { ...item, is_read: true } : item
+      )
+    );
+  } catch (error: any) {
+    alert(error.message);
+  }
 }
-
   
   async function analyze() {
     if (!file) return setResult("ارفع صورة الشارت أولاً.");

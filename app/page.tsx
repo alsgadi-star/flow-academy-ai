@@ -11,6 +11,12 @@ import {
 } from "./services/signals";
 
 import {
+  loadProviderSignals,
+  loadSignalProviders,
+} from "./services/providerSignals";
+
+
+import {
   loadNotifications,
   markNotificationAsReadById,
 } from "./services/notifications";
@@ -62,9 +68,11 @@ export default function HomePage() {
   const [preview, setPreview] = useState("");
   const [result, setResult] = useState("نتيجة التحليل تظهر هنا.");
   const [loading, setLoading] = useState(false);
-
   const [question, setQuestion] = useState("");
 
+const [providerSignals, setProviderSignals] = useState<any[]>([]);
+const [signalProviders, setSignalProviders] = useState<any[]>([]);
+  
   const [signals, setSignals] = useState<any[]>([]);
   const [news, setNews] = useState<any[]>([]);
   const [academyPosts, setAcademyPosts] = useState<any[]>([]);
@@ -140,6 +148,8 @@ loadNews().then(setNews);
 loadAcademyPosts().then(setAcademyPosts);
 loadNotifications().then(setNotifications);
 loadProfiles();
+loadProviderSignals().then(setProviderSignals);
+loadSignalProviders().then(setSignalProviders);
 
   return () => data.subscription.unsubscribe();
 }, []);

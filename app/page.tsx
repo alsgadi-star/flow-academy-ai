@@ -11,6 +11,12 @@ import {
 } from "./services/signals";
 
 import {
+  loadAcademyPosts,
+  createAcademyPost,
+  createAcademyNotification,
+} from "./services/academy";
+
+import {
   loadNews,
   createNews,
   createNewsNotification,
@@ -168,7 +174,7 @@ if (session?.user) {
 
 loadSignals().then(setSignals);
 loadNews().then(setNews);
-loadAcademyPosts();
+loadAcademyPosts().then(setAcademyPosts);
 loadNotifications();
 loadProfiles();
 
@@ -244,50 +250,27 @@ loadProfiles();
 }
 
 async function addAcademyContent() {
- const { data: insertedPost, error } = await supabase
-  .from("academy_posts")
-  .insert([academyItem])
-  .select()
-  .single();
+  try {
+    const insertedPost = await createAcademyPost(academyItem);
 
-  if (!error) {
+    await createAcademyNotification(insertedPost);
 
-  const { error: notificationError } = await supabase
-    .from("notifications")
-    .insert([
-      {
-        title: "محتوى جديد في الأكاديمية",
-        message: academyItem.title,
-        type: academyItem.type,
-        target_id: insertedPost.id,
-        target_table: "academy_posts",
-      },
-    ]);
+    alert("تمت إضافة محتوى الأكاديمية");
 
-  if (notificationError) {
-    alert(notificationError.message);
-    return;
-  }
-
-  alert("تمت إضافة محتوى الأكاديمية");
-    const { data } = await supabase
-      .from("academy_posts")
-      .select("*")
-      .order("created_at", { ascending: false });
-
-    setAcademyPosts(data || []);
+    const updatedPosts = await loadAcademyPosts();
+    setAcademyPosts(updatedPosts);
 
     setAcademyItem({
-  title: "",
-  excerpt: "",
-  content: "",
-  type: "article",
-  access: "free",
-});
-  } else {
+      title: "",
+      excerpt: "",
+      content: "",
+      type: "article",
+      access: "free",
+    });
+  } catch (error: any) {
     alert(error.message);
   }
-}  
+}
 
 async function updateSubscription() {
   const selectedProfile = profiles.find(

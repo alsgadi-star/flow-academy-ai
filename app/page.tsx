@@ -11,6 +11,11 @@ import {
 } from "./services/signals";
 
 import {
+  loadSubscription,
+  updateUserSubscription,
+} from "./services/subscriptions";
+
+import {
   loadAcademyPosts,
   createAcademyPost,
   createAcademyNotification,
@@ -98,7 +103,7 @@ supabase.auth.getUser().then(({ data }) => {
   setLoadingAuth(false);
 
   if (data.user) {
-    loadSubscription(data.user.id);
+    loadSubscription(data.user.id).then(setSubscription);
   }
 });
 
@@ -107,7 +112,7 @@ supabase.auth.getUser().then(({ data }) => {
 setLoadingAuth(false);
 
 if (session?.user) {
-  loadSubscription(session.user.id);
+  loadSubscription(session.user.id).then(setSubscription);
 } else {
   setSubscription(null);
 }
@@ -127,33 +132,7 @@ if (session?.user) {
   setNotifications(data || []);
 }
 
-   async function loadSubscription(userId: string) {
-  const { data } = await supabase
-    .from("subscriptions")
-    .select("*")
-    .eq("user_id", userId)
-    .maybeSingle();
-
-  if (data) {
-    setSubscription(data);
-    return;
-  }
-
-  const { data: newSubscription } = await supabase
-    .from("subscriptions")
-    .insert([
-      {
-        user_id: userId,
-        plan: "free",
-        status: "active",
-      },
-    ])
-    .select()
-    .single();
-
-  setSubscription(newSubscription);
-}
-
+   
 
    async function loadProfiles() {
   const { data } = await supabase
@@ -278,28 +257,19 @@ async function updateSubscription() {
     return;
   }
 
-  const { error } = await supabase
-    .from("subscriptions")
-    .upsert(
-      {
-        user_id: selectedProfile.id,
-        plan: subscriptionPlan,
-        status: "active",
-      },
-      {
-        onConflict: "user_id",
-      }
+  try {
+    await updateUserSubscription(
+      selectedProfile.id,
+      subscriptionPlan
     );
 
-  if (error) {
+    alert("تم تحديث الاشتراك بنجاح");
+
+    setSubscriptionUserId("");
+    setSubscriptionPlan("free");
+  } catch (error: any) {
     alert(error.message);
-    return;
   }
-
-  alert("تم تحديث الاشتراك بنجاح");
-
-  setSubscriptionUserId("");
-  setSubscriptionPlan("free");
 }
 
   

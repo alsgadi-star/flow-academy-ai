@@ -9,6 +9,13 @@ import {
   createSignal,
   createSignalNotification,
 } from "./services/signals";
+
+import {
+  loadNews,
+  createNews,
+  createNewsNotification,
+} from "./services/news";
+
 import { supabase } from "../lib/supabase";
 import {
   UploadCloud,
@@ -167,7 +174,8 @@ if (session?.user) {
   setProfiles(data || []);
 }
 
-loadSignals().then(setSignals);loadNews();
+loadSignals().then(setSignals);
+loadNews().then(setNews);
 loadAcademyPosts();
 loadNotifications();
 loadProfiles();
@@ -223,32 +231,22 @@ loadProfiles();
   }
 
   async function addNews() {
-  const { data: insertedNews, error } = await supabase
-    .from("news")
-    .insert([newsItem])
-    .select()
-    .single();
+  try {
+    const insertedNews = await createNews(newsItem);
 
-  if (!error) {
-    await supabase.from("notifications").insert([
-      {
-        title: "خبر اقتصادي جديد",
-        message: newsItem.title,
-        body: newsItem.content,
-        type: "news",
-        target_id: insertedNews.id,
-        target_table: "news",
-      },
-    ]);
+    await createNewsNotification(insertedNews);
 
     alert("تمت إضافة الخبر");
+
+    const updatedNews = await loadNews();
+    setNews(updatedNews);
 
     setNewsItem({
       title: "",
       content: "",
       impact: "medium",
     });
-  } else {
+  } catch (error: any) {
     alert(error.message);
   }
 }

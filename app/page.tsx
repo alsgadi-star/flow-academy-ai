@@ -607,7 +607,7 @@ return (
   <p>{item.message}</p>
 )}
 
-{item.body && (
+{item.body && item.body !== item.message && (
   <p style={{ color: "#94a3b8" }}>
     {item.body}
   </p>

@@ -25,6 +25,8 @@ export async function loadNotifications() {
     is_read: n.is_sent,
     created_at: n.created_at,
     type: "signal_monitor",
+    target_table: "provider_signals",
+    target_id: n.signal_id,
     source: "signal_notifications",
     original_id: n.id,
   }));

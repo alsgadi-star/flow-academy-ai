@@ -161,7 +161,7 @@ export default function SignalsPage({
                 : "transparent",
           }}
         >
-          ⭐ Flow Elite
+          ⭐ توصيات VIP
         </button>
       </div>
 

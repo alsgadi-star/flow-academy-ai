@@ -60,6 +60,8 @@ export default function HomePage() {
   const [user, setUser] = useState<any>(null);
   const [loadingAuth, setLoadingAuth] = useState(true);
 
+  const [homeMode, setHomeMode] = useState("command");
+const [analysisStage, setAnalysisStage] = useState("");
   const [tab, setTab] = useState("home");
   const [academyTab, setAcademyTab] = useState("news");
   const [selectedPost, setSelectedPost] = useState<any>(null);

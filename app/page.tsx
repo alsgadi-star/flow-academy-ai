@@ -446,48 +446,134 @@ return (
 </header>
 
       {tab === "home" && (
-        <>
-          <section className="hero">
-            <small>مرحباً بك</small>
-            <h2>ماذا تريد اليوم؟</h2>
-            <div className="ai-box">
-              تحليل سكالب وسوينغ، إشارات، مستشار، وأكاديمية تعليمية بمنهج ICT و CRT.
-            </div>
-          </section>
+  <>
+    <section
+      style={{
+        padding: "22px 0 10px",
+        textAlign: "right",
+      }}
+    >
+      <p style={{ color: "#94a3b8", margin: 0 }}>مرحباً أحمد 👋</p>
+      <h2 style={{ fontSize: "34px", margin: "8px 0", color: "#fff" }}>
+        ماذا تريد أن تحلل اليوم؟
+      </h2>
+      <p style={{ color: "#22d3ee", lineHeight: 1.8, margin: 0 }}>
+        منصة تداول ذكية لتحليل الشارت، متابعة التوصيات، ومراقبة الصفقات.
+      </p>
+    </section>
 
-          <section className="grid">
-            <div className="mini"><b>سكالب</b><span>15M + 5M + 1M</span></div>
-            <div className="mini"><b>سوينغ</b><span>D1 + H4 + H1</span></div>
-          </section>
+    <section
+      style={{
+        background:
+          "radial-gradient(circle at top right,rgba(20,241,149,.22),transparent 35%),linear-gradient(135deg,#04111f,#07182d)",
+        border: "1px solid #155e75",
+        borderRadius: "26px",
+        padding: "22px",
+        marginBottom: "18px",
+        boxShadow: "0 0 32px rgba(34,211,238,0.12)",
+      }}
+    >
+      <div className="card-title">
+        <div className="icon">
+          <Brain size={24} />
+        </div>
+        <h3>المستشار الذكي</h3>
+      </div>
 
-          <section className="card">
-            <div className="card-title">
-              <div className="icon"><UploadCloud size={23} /></div>
-              <h3>تحليل الشارت</h3>
-            </div>
+      <p style={{ color: "#94a3b8", lineHeight: 1.9 }}>
+        حلل أي شارت خلال ثوانٍ بمنهج ICT و CRT، واحصل على تقرير واضح عن الاتجاه، السيولة، مناطق الدخول، وإدارة الصفقة.
+      </p>
 
-            <label className="upload">
-              <input type="file" accept="image/*" onChange={onFile} />
-              <div>
-                <UploadCloud size={34} />
-                <p>اضغط هنا لرفع صورة الشارت</p>
-              </div>
-            </label>
+      <label className="upload">
+        <input type="file" accept="image/*" onChange={onFile} />
+        <div>
+          <UploadCloud size={38} />
+          <p style={{ fontWeight: 800 }}>اضغط لرفع صورة الشارت</p>
+          <small style={{ color: "#94a3b8" }}>PNG • JPG • JPEG</small>
+        </div>
+      </label>
 
-            {preview && (
-              <img className="preview" src={preview} style={{ display: "block" }} alt="chart" />
-            )}
-
-            <button className="btn" onClick={analyze} disabled={loading}>
-              {loading ? "جاري التحليل..." : "حلل الآن"}
-            </button>
-
-            <div className={`result ${result === "نتيجة التحليل تظهر هنا." ? "empty" : ""}`}>
-              {result}
-            </div>
-          </section>
-        </>
+      {preview && (
+        <img
+          className="preview"
+          src={preview}
+          style={{ display: "block" }}
+          alt="chart"
+        />
       )}
+
+      <button className="btn" onClick={analyze} disabled={loading}>
+        {loading ? "جاري التحليل..." : "🧠 ابدأ التحليل"}
+      </button>
+
+      <div className={`result ${result === "نتيجة التحليل تظهر هنا." ? "empty" : ""}`}>
+        {result === "نتيجة التحليل تظهر هنا."
+          ? "🧠 بانتظار تحليل أول شارت."
+          : result}
+      </div>
+    </section>
+
+    <section
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(2,1fr)",
+        gap: "12px",
+        marginBottom: "18px",
+      }}
+    >
+      <div className="mini">
+        <b>⚡ سكالب</b>
+        <span>1M • 5M • 15M</span>
+      </div>
+
+      <div className="mini">
+        <b>📈 سوينغ</b>
+        <span>1H • H4 • D1</span>
+      </div>
+    </section>
+
+    <section
+      style={{
+        display: "grid",
+        gap: "12px",
+        marginBottom: "18px",
+      }}
+    >
+      <div
+        className="result"
+        onClick={() => setTab("signals")}
+        style={{ cursor: "pointer" }}
+      >
+        <h3 style={{ marginTop: 0 }}>🧠 مركز التوصيات</h3>
+        <p>محرك الرصد الذكي يعمل الآن.</p>
+        <p style={{ color: "#22d3ee" }}>
+          الفرص النشطة: {providerSignals?.length || 0}
+        </p>
+      </div>
+
+      <div
+        className="result"
+        onClick={() => setTab("notifications")}
+        style={{ cursor: "pointer" }}
+      >
+        <h3 style={{ marginTop: 0 }}>🔔 آخر التنبيهات</h3>
+        <p>
+          {notifications?.[0]?.title || "لا توجد تنبيهات جديدة حالياً"}
+        </p>
+        {notifications?.[0]?.message && (
+          <p style={{ color: "#94a3b8" }}>{notifications[0].message}</p>
+        )}
+      </div>
+
+      <div className="result">
+        <h3 style={{ marginTop: 0 }}>🌍 السوق الآن</h3>
+        <p>الذهب: تحت المراقبة</p>
+        <p>الدولار: بانتظار بيانات جديدة</p>
+        <p>ناسداك: مراقبة الزخم</p>
+      </div>
+    </section>
+  </>
+)}
 
  {tab === "advisor" && (
   <section className="card">

@@ -449,129 +449,213 @@ return (
   <>
     <section
       style={{
-        padding: "22px 0 10px",
-        textAlign: "right",
+        textAlign: "center",
+        padding: "26px 0 18px",
       }}
     >
-      <p style={{ color: "#94a3b8", margin: 0 }}>مرحباً أحمد 👋</p>
-      <h2 style={{ fontSize: "34px", margin: "8px 0", color: "#fff" }}>
-        ماذا تريد أن تحلل اليوم؟
-      </h2>
-      <p style={{ color: "#22d3ee", lineHeight: 1.8, margin: 0 }}>
-        منصة تداول ذكية لتحليل الشارت، متابعة التوصيات، ومراقبة الصفقات.
+      <div
+        style={{
+          fontSize: "42px",
+          marginBottom: "10px",
+          filter: "drop-shadow(0 0 18px rgba(34,211,238,.45))",
+        }}
+      >
+        🧠
+      </div>
+
+      <h1 style={{ margin: 0, fontSize: "26px", color: "#fff" }}>
+        Flow Academy AI
+      </h1>
+
+      <p style={{ marginTop: "8px", color: "#22d3ee", fontWeight: 700 }}>
+        مركز القيادة الذكي
       </p>
     </section>
 
     <section
       style={{
-        background:
-          "radial-gradient(circle at top right,rgba(20,241,149,.22),transparent 35%),linear-gradient(135deg,#04111f,#07182d)",
-        border: "1px solid #155e75",
-        borderRadius: "26px",
-        padding: "22px",
+        background: "linear-gradient(135deg,#061225,#07182d)",
+        border: "1px solid #164e63",
+        borderRadius: "24px",
+        padding: "18px",
         marginBottom: "18px",
-        boxShadow: "0 0 32px rgba(34,211,238,0.12)",
       }}
     >
-      <div className="card-title">
-        <div className="icon">
-          <Brain size={24} />
+      <h3 style={{ marginTop: 0 }}>السوق الآن</h3>
+
+      <div className="grid">
+        <div className="mini">
+          <b>🟢 Risk On</b>
+          <span>مزاج السوق</span>
         </div>
-        <h3>المستشار الذكي</h3>
-      </div>
 
-      <p style={{ color: "#94a3b8", lineHeight: 1.9 }}>
-        حلل أي شارت خلال ثوانٍ بمنهج ICT و CRT، واحصل على تقرير واضح عن الاتجاه، السيولة، مناطق الدخول، وإدارة الصفقة.
-      </p>
-
-      <label className="upload">
-        <input type="file" accept="image/*" onChange={onFile} />
-        <div>
-          <UploadCloud size={38} />
-          <p style={{ fontWeight: 800 }}>اضغط لرفع صورة الشارت</p>
-          <small style={{ color: "#94a3b8" }}>PNG • JPG • JPEG</small>
+        <div className="mini">
+          <b>الذهب</b>
+          <span>تحت المراقبة</span>
         </div>
-      </label>
 
-      {preview && (
-        <img
-          className="preview"
-          src={preview}
-          style={{ display: "block" }}
-          alt="chart"
-        />
-      )}
+        <div className="mini">
+          <b>الدولار</b>
+          <span>ضعيف</span>
+        </div>
 
-      <button className="btn" onClick={analyze} disabled={loading}>
-        {loading ? "جاري التحليل..." : "🧠 ابدأ التحليل"}
-      </button>
-
-      <div className={`result ${result === "نتيجة التحليل تظهر هنا." ? "empty" : ""}`}>
-        {result === "نتيجة التحليل تظهر هنا."
-          ? "🧠 بانتظار تحليل أول شارت."
-          : result}
+        <div className="mini">
+          <b>ناسداك</b>
+          <span>زخم صاعد</span>
+        </div>
       </div>
     </section>
 
-    <section
-      style={{
-        display: "grid",
-        gridTemplateColumns: "repeat(2,1fr)",
-        gap: "12px",
-        marginBottom: "18px",
-      }}
-    >
-      <div className="mini">
-        <b>⚡ سكالب</b>
-        <span>1M • 5M • 15M</span>
-      </div>
+    {homeMode === "command" && (
+      <>
+        <section
+          onClick={() => setHomeMode("analyze")}
+          style={{
+            width: "210px",
+            height: "210px",
+            borderRadius: "50%",
+            margin: "22px auto",
+            display: "grid",
+            placeItems: "center",
+            textAlign: "center",
+            cursor: "pointer",
+            background:
+              "radial-gradient(circle,rgba(20,241,149,.28),rgba(34,211,238,.10),#061225 70%)",
+            border: "1px solid rgba(34,211,238,.35)",
+            boxShadow:
+              "0 0 45px rgba(20,241,149,.18), inset 0 0 30px rgba(34,211,238,.12)",
+          }}
+        >
+          <div>
+            <div style={{ fontSize: "44px", marginBottom: "10px" }}>🧠</div>
+            <h2 style={{ margin: 0, color: "#fff" }}>ابدأ التحليل</h2>
+            <p style={{ color: "#94a3b8", margin: "8px 0 0" }}>
+              اضغط أو ارفع الشارت
+            </p>
+          </div>
+        </section>
 
-      <div className="mini">
-        <b>📈 سوينغ</b>
-        <span>1H • H4 • D1</span>
-      </div>
-    </section>
+        <section className="grid" style={{ marginBottom: "18px" }}>
+          <div className="mini">
+            <b>⚡ سكالب</b>
+            <span>آخر فرصة</span>
+          </div>
 
-    <section
-      style={{
-        display: "grid",
-        gap: "12px",
-        marginBottom: "18px",
-      }}
-    >
-      <div
-        className="result"
-        onClick={() => setTab("signals")}
-        style={{ cursor: "pointer" }}
+          <div className="mini">
+            <b>📈 سوينغ</b>
+            <span>آخر فرصة</span>
+          </div>
+
+          <div className="mini" onClick={() => setTab("signals")}>
+            <b>📡 الرادار</b>
+            <span>{providerSignals?.length || 0} فرص جديدة</span>
+          </div>
+
+          <div className="mini" onClick={() => setTab("advisor")}>
+            <b>🧠 المستشار</b>
+            <span>جاهز للتحليل</span>
+          </div>
+        </section>
+
+        <section className="result">
+          <h3 style={{ marginTop: 0 }}>🧠 رسالة النظام</h3>
+          <p>
+            رصدت المنصة حركة نشطة في الأسواق. ارفع صورة الشارت للحصول على تحليل فوري.
+          </p>
+        </section>
+      </>
+    )}
+
+    {homeMode === "analyze" && (
+      <section
+        style={{
+          background:
+            "radial-gradient(circle at top right,rgba(20,241,149,.18),transparent 35%),linear-gradient(135deg,#04111f,#07182d)",
+          border: "1px solid #155e75",
+          borderRadius: "26px",
+          padding: "22px",
+          marginBottom: "18px",
+          boxShadow: "0 0 32px rgba(34,211,238,0.12)",
+        }}
       >
-        <h3 style={{ marginTop: 0 }}>🧠 مركز التوصيات</h3>
-        <p>محرك الرصد الذكي يعمل الآن.</p>
-        <p style={{ color: "#22d3ee" }}>
-          الفرص النشطة: {providerSignals?.length || 0}
-        </p>
-      </div>
+        <button
+          className="btn-dark"
+          onClick={() => setHomeMode("command")}
+          style={{ marginBottom: "14px" }}
+        >
+          ← رجوع
+        </button>
 
-      <div
-        className="result"
-        onClick={() => setTab("notifications")}
-        style={{ cursor: "pointer" }}
-      >
-        <h3 style={{ marginTop: 0 }}>🔔 آخر التنبيهات</h3>
-        <p>
-          {notifications?.[0]?.title || "لا توجد تنبيهات جديدة حالياً"}
-        </p>
-        {notifications?.[0]?.message && (
-          <p style={{ color: "#94a3b8" }}>{notifications[0].message}</p>
+        <h2 style={{ color: "#22d3ee", marginTop: 0 }}>
+          رفع الشارت
+        </h2>
+
+        <label className="upload">
+          <input type="file" accept="image/*" onChange={onFile} />
+          <div>
+            <UploadCloud size={40} />
+            <p style={{ fontWeight: 800 }}>اسحب صورة الشارت هنا</p>
+            <small style={{ color: "#94a3b8" }}>أو اضغط للاختيار</small>
+          </div>
+        </label>
+
+        {preview && (
+          <img
+            className="preview"
+            src={preview}
+            style={{ display: "block" }}
+            alt="chart"
+          />
         )}
-      </div>
 
-      <div className="result">
-        <h3 style={{ marginTop: 0 }}>🌍 السوق الآن</h3>
-        <p>الذهب: تحت المراقبة</p>
-        <p>الدولار: بانتظار بيانات جديدة</p>
-        <p>ناسداك: مراقبة الزخم</p>
-      </div>
-    </section>
+        <button className="btn" onClick={analyze} disabled={loading}>
+          {loading ? "جاري التحليل..." : "🧠 ابدأ التحليل"}
+        </button>
+
+        {loading && (
+          <div className="result" style={{ marginTop: "16px" }}>
+            <h3 style={{ marginTop: 0 }}>{analysisStage}</h3>
+            <div
+              style={{
+                height: "10px",
+                borderRadius: "20px",
+                background: "#0f172a",
+                overflow: "hidden",
+                marginTop: "14px",
+              }}
+            >
+              <div
+                style={{
+                  height: "100%",
+                  width:
+                    analysisStage === "جاري قراءة الشارت..."
+                      ? "35%"
+                      : analysisStage === "تحليل الهيكل..."
+                      ? "58%"
+                      : analysisStage === "البحث عن السيولة..."
+                      ? "78%"
+                      : "92%",
+                  background: "linear-gradient(90deg,#14f195,#22d3ee)",
+                }}
+              />
+            </div>
+          </div>
+        )}
+
+        {!loading && result && result !== "نتيجة التحليل تظهر هنا." && (
+          <div className="result" style={{ marginTop: "16px", lineHeight: 1.9 }}>
+            <h3 style={{ marginTop: 0 }}>🧠 تقرير التحليل</h3>
+            {result}
+          </div>
+        )}
+
+        {!loading && result === "نتيجة التحليل تظهر هنا." && (
+          <div className="result empty" style={{ marginTop: "16px" }}>
+            🧠 بانتظار تحليل أول شارت.
+          </div>
+        )}
+      </section>
+    )}
   </>
 )}
 

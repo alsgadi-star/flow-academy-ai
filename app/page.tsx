@@ -503,27 +503,27 @@ return (
         background:
           "radial-gradient(circle at top right,rgba(20,241,149,.18),transparent 35%),linear-gradient(135deg,#04111f,#07182d)",
         border: "1px solid #155e75",
-        borderRadius: "22px",
+        borderRadius: "24px",
         padding: "20px",
         marginBottom: "18px",
-        boxShadow: "0 0 24px rgba(34,211,238,0.10)",
+        boxShadow: "0 0 28px rgba(34,211,238,0.12)",
       }}
     >
       <h2 style={{ color: "#22d3ee", marginBottom: 10 }}>
         🧠 غرفة التحليل الذكي
       </h2>
 
-      <p style={{ color: "#94a3b8", lineHeight: 1.8 }}>
-        ارفع الشارت، واكتب سؤالك. سيقوم المستشار بتحليل الصفقة وفق منهج ICT و CRT مع التركيز على الاتجاه، السيولة، مناطق الدخول، وإدارة المخاطرة.
+      <p style={{ color: "#94a3b8", lineHeight: 1.9, margin: 0 }}>
+        ارفع صورة الشارت وصورة الحساب، ثم اكتب سؤالك. سيقوم المستشار بتحليل الصفقة وفق منهج ICT و CRT.
       </p>
     </div>
 
     <div style={{ display: "grid", gap: "10px", marginBottom: "18px" }}>
       {[
         "① ارفع صورة الشارت",
-        "② اكتب سؤالك عن الصفقة",
-        "③ اضغط تحليل",
-        "④ استلم تقرير المستشار الذكي",
+        "② ارفع صورة الحساب والهامش",
+        "③ اكتب سؤالك عن الصفقة",
+        "④ اضغط تحليل",
       ].map((step) => (
         <div
           key={step}
@@ -531,9 +531,10 @@ return (
             background: "#061225",
             border: "1px solid #17365d",
             borderRadius: "16px",
-            padding: "12px",
+            padding: "13px",
             color: "#e5e7eb",
             fontWeight: 700,
+            lineHeight: 1.6,
           }}
         >
           {step}
@@ -543,22 +544,44 @@ return (
 
     <label className="upload">
       <input type="file" accept="image/*" onChange={onFile} />
-      📈 رفع صورة الشارت
+      <div>
+        <div style={{ fontSize: "28px", marginBottom: "8px" }}>📈</div>
+        <p style={{ margin: 0, fontWeight: 800 }}>رفع صورة الشارت</p>
+        <small style={{ color: "#94a3b8" }}>
+          الشارت، الهيكل، السيولة، ومناطق الدخول
+        </small>
+      </div>
     </label>
 
     {preview && (
       <img
         className="preview"
         src={preview}
-        style={{ display: "block" }}
+        style={{ display: "block", marginTop: "12px", borderRadius: "16px" }}
         alt="chart"
       />
     )}
 
+    <label className="upload" style={{ marginTop: 12 }}>
+      <input type="file" accept="image/*" />
+      <div>
+        <div style={{ fontSize: "28px", marginBottom: "8px" }}>💰</div>
+        <p style={{ margin: 0, fontWeight: 800 }}>رفع صورة الحساب والهامش</p>
+        <small style={{ color: "#94a3b8" }}>
+          الرصيد، الهامش، وحجم المخاطرة
+        </small>
+      </div>
+    </label>
+
     <textarea
       value={question}
       onChange={(e) => setQuestion(e.target.value)}
-      placeholder="مثال: هل أدخل الصفقة؟ هل أنقل وقف الخسارة؟ هل الاتجاه ما زال صالحاً؟"
+      placeholder="مثال: هل أدخل الصفقة؟ هل أنقل وقف الخسارة؟ هل المخاطرة مناسبة؟"
+      style={{
+        minHeight: "120px",
+        lineHeight: 1.8,
+        fontSize: "15px",
+      }}
     />
 
     <button className="btn" onClick={analyze} disabled={loading}>
@@ -571,6 +594,7 @@ return (
         marginTop: "16px",
         whiteSpace: "pre-wrap",
         lineHeight: 1.9,
+        fontSize: "15px",
       }}
     >
       {result}

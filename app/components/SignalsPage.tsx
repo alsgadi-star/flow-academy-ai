@@ -21,7 +21,38 @@ export default function SignalsPage({
   const [signalsTab, setSignalsTab] = useState("radar");
 
   const activeEngines = signalProviders.length;
-  const detectedSignals = providerSignals.length;
+  const activeSignals = providerSignals.filter(
+    (s) => s.signal_status === "active"
+  ).length;
+
+  function symbolName(symbol: string) {
+    const s = String(symbol || "").toUpperCase();
+
+    if (s === "GOLD" || s === "XAUUSD") return "الذهب";
+    if (s === "BTCUSD" || s === "BTC") return "البتكوين";
+    if (s === "EURUSD") return "اليورو دولار";
+    if (s === "GBPUSD") return "الباوند دولار";
+    if (s === "AUDUSD") return "الأسترالي دولار";
+    if (s === "USDJPY") return "الدولار ين";
+    if (s === "NAS100") return "ناسداك";
+    if (s === "US30") return "الداو جونز";
+
+    return s;
+  }
+
+  function directionLabel(direction: string) {
+    return direction === "BUY" ? "شراء" : "بيع";
+  }
+
+  function statusLabel(status: string) {
+    if (status === "pending") return "قيد الانتظار";
+    if (status === "active") return "نشطة";
+    if (status === "tp1") return "حققت الهدف الأول";
+    if (status === "tp2") return "حققت الهدف الثاني";
+    if (status === "closed") return "مغلقة";
+    if (status === "stopped") return "وقف خسارة";
+    return "قيد المتابعة";
+  }
 
   if (selectedSignal) {
     return (
@@ -34,18 +65,18 @@ export default function SignalsPage({
           ← رجوع
         </button>
 
-        <h2>🧠 تقرير Flow Radar AI</h2>
+        <h2>🧠 تقرير الصفقة</h2>
 
-        <p>الأصل: {selectedSignal.symbol}</p>
-        <p>
-          الاتجاه:{" "}
-          {selectedSignal.direction === "BUY" ? "شراء" : "بيع"}
-        </p>
-        <p>الدخول: {selectedSignal.entry_price}</p>
-        <p>وقف الخسارة: {selectedSignal.sl}</p>
-        <p>الهدف الأول: {selectedSignal.tp1}</p>
-        <p>الهدف الثاني: {selectedSignal.tp2}</p>
-        <p>الهدف الثالث: {selectedSignal.tp3}</p>
+        <div className="result">
+          <p>الأصل: {symbolName(selectedSignal.symbol)}</p>
+          <p>الاتجاه: {directionLabel(selectedSignal.direction)}</p>
+          <p>الدخول: {selectedSignal.entry_price}</p>
+          <p>وقف الخسارة: {selectedSignal.sl}</p>
+          <p>الهدف الأول: {selectedSignal.tp1}</p>
+          <p>الهدف الثاني: {selectedSignal.tp2}</p>
+          <p>الهدف الثالث: {selectedSignal.tp3}</p>
+          <p>الحالة: {statusLabel(selectedSignal.status)}</p>
+        </div>
       </section>
     );
   }
@@ -56,7 +87,7 @@ export default function SignalsPage({
         <div className="icon">
           <Brain size={23} />
         </div>
-        <h3>Flow Radar AI</h3>
+        <h3>مركز التوصيات</h3>
       </div>
 
       <div
@@ -73,10 +104,10 @@ export default function SignalsPage({
         <div style={{ display: "flex", justifyContent: "space-between", gap: "14px" }}>
           <div>
             <h2 style={{ margin: 0, color: "#22d3ee" }}>
-              🧠 مركز الرصد الذكي
+              🧠 مركز التوصيات
             </h2>
             <p style={{ color: "#94a3b8", marginTop: "8px", lineHeight: 1.8 }}>
-              يراقب Flow Radar AI الأسواق العالمية، يحلل الفرص، ويتابع الصفقات لحظة بلحظة.
+              يراقب محرك الرصد الذكي الأسواق العالمية، ويحلل فرص التداول، ويتابع الصفقات حتى الإغلاق.
             </p>
           </div>
 
@@ -105,13 +136,13 @@ export default function SignalsPage({
           }}
         >
           <div className="mini">
-            <b>{activeEngines}</b>
-            <span>محركات الرصد</span>
+            <b>{activeSignals}</b>
+            <span>فرص نشطة</span>
           </div>
 
           <div className="mini">
-            <b>{detectedSignals}</b>
-            <span>فرص مكتشفة</span>
+            <b>{activeEngines}</b>
+            <span>محركات التحليل</span>
           </div>
         </div>
       </div>
@@ -143,7 +174,7 @@ export default function SignalsPage({
                 : "transparent",
           }}
         >
-          🧠 Flow Radar AI
+          🧠 مركز التوصيات
         </button>
 
         <button
@@ -161,14 +192,14 @@ export default function SignalsPage({
                 : "transparent",
           }}
         >
-          ⭐ توصيات VIP
+          💎 التوصيات الاحترافية
         </button>
       </div>
 
       {signalsTab === "radar" && (
         <>
           {providerSignals.length === 0 ? (
-            <div className="result">لا توجد فرص مرصودة حالياً</div>
+            <div className="result">لا توجد فرص تداول مرصودة حالياً.</div>
           ) : (
             providerSignals.map((item) => {
               const isBuy = item.direction === "BUY";
@@ -177,8 +208,7 @@ export default function SignalsPage({
                 <div
                   key={item.id}
                   style={{
-                    background:
-                      "linear-gradient(135deg,#061225,#07182d)",
+                    background: "linear-gradient(135deg,#061225,#07182d)",
                     border: "1px solid #075985",
                     borderRadius: "22px",
                     padding: "18px",
@@ -196,7 +226,7 @@ export default function SignalsPage({
                     }}
                   >
                     <strong style={{ color: "#38bdf8" }}>
-                      📡 Verified by Flow Radar
+                      🧠 تم تحليلها بواسطة محرك الرصد الذكي
                     </strong>
 
                     <span style={{ color: "#64748b", fontSize: "12px" }}>
@@ -216,7 +246,8 @@ export default function SignalsPage({
                       marginBottom: "14px",
                     }}
                   >
-                    {isBuy ? "🟢 فرصة شراء" : "🔴 فرصة بيع"} على {item.symbol}
+                    {isBuy ? "🟢 فرصة شراء" : "🔴 فرصة بيع"} على{" "}
+                    {symbolName(item.symbol)}
                   </h2>
 
                   <div
@@ -232,6 +263,7 @@ export default function SignalsPage({
                     {item.tp1 && <p>الهدف الأول: {item.tp1}</p>}
                     {item.tp2 && <p>الهدف الثاني: {item.tp2}</p>}
                     {item.tp3 && <p>الهدف الثالث: {item.tp3}</p>}
+                    <p>الحالة: {statusLabel(item.status)}</p>
                   </div>
 
                   <div
@@ -245,9 +277,13 @@ export default function SignalsPage({
                       lineHeight: 1.7,
                     }}
                   >
-                    🧠 تقييم Flow Radar AI
+                    🧠 تحليل النظام
                     <br />
-                    تمت مراجعة الفرصة آلياً، والمتابعة المباشرة مفعلة.
+                    درجة الثقة: عالية
+                    <br />
+                    المتابعة المباشرة: مفعلة
+                    <br />
+                    يتم مراقبة الصفقة بشكل مستمر حتى الإغلاق.
                   </div>
                 </div>
               );
@@ -259,29 +295,11 @@ export default function SignalsPage({
       {signalsTab === "vip" && (
         <>
           {signals.length === 0 ? (
-            <div className="result">لا توجد فرص Elite حالياً</div>
+            <div className="result">لا توجد توصيات احترافية حالياً</div>
           ) : (
             signals.map((signal) => {
               const isVip = signal.access === "vip";
               const isBuy = signal.direction === "BUY";
-
-              const statusLabel =
-                signal.status === "active"
-                  ? "نشطة"
-                  : signal.status === "closed"
-                  ? "منتهية"
-                  : signal.status === "tp_hit"
-                  ? "حققت الهدف"
-                  : signal.status || "نشطة";
-
-              const statusColor =
-                signal.status === "active"
-                  ? "#22c55e"
-                  : signal.status === "closed"
-                  ? "#ef4444"
-                  : signal.status === "tp_hit"
-                  ? "#facc15"
-                  : "#22c55e";
 
               return (
                 <div
@@ -294,14 +312,9 @@ export default function SignalsPage({
                     marginBottom: "16px",
                   }}
                 >
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <span style={{ color: statusColor }}>{statusLabel}</span>
-                    {isVip && <span style={{ color: "#facc15" }}>Flow Elite</span>}
-                  </div>
-
                   {isVip ? (
                     <div style={{ textAlign: "center", padding: "25px 0" }}>
-                      <h2 style={{ color: "#facc15" }}>Flow Elite</h2>
+                      <h2 style={{ color: "#facc15" }}>التوصيات الاحترافية</h2>
                       <p style={{ color: "#94a3b8" }}>الترقية مطلوبة للوصول</p>
                       <button className="btn-dark" onClick={() => setTab("plans")}>
                         ترقية الحساب
@@ -316,14 +329,14 @@ export default function SignalsPage({
                           marginBottom: "15px",
                         }}
                       >
-                        {signal.symbol} {signal.direction}
+                        {isBuy ? "شراء" : "بيع"} {symbolName(signal.symbol)}
                       </h2>
 
                       <p>الدخول: {signal.entry_price}</p>
                       <p>وقف الخسارة: {signal.sl}</p>
-                      <p>TP1: {signal.tp1}</p>
-                      <p>TP2: {signal.tp2}</p>
-                      <p>TP3: {signal.tp3}</p>
+                      <p>الهدف الأول: {signal.tp1}</p>
+                      <p>الهدف الثاني: {signal.tp2}</p>
+                      <p>الهدف الثالث: {signal.tp3}</p>
                     </>
                   )}
                 </div>

@@ -514,22 +514,16 @@ return (
       </h2>
 
       <p style={{ color: "#94a3b8", lineHeight: 1.8 }}>
-        ارفع الشارت، أضف صورة الحساب، واكتب سؤالك. سيقوم المستشار بتحليل الصفقة وفق منهج ICT و CRT مع التركيز على الاتجاه، السيولة، مناطق الدخول، وإدارة المخاطرة.
+        ارفع الشارت، واكتب سؤالك. سيقوم المستشار بتحليل الصفقة وفق منهج ICT و CRT مع التركيز على الاتجاه، السيولة، مناطق الدخول، وإدارة المخاطرة.
       </p>
     </div>
 
-    <div
-      style={{
-        display: "grid",
-        gap: "10px",
-        marginBottom: "18px",
-      }}
-    >
+    <div style={{ display: "grid", gap: "10px", marginBottom: "18px" }}>
       {[
         "① ارفع صورة الشارت",
-        "② ارفع صورة الحساب والهامش",
-        "③ اكتب سؤالك عن الصفقة",
-        "④ اضغط تحليل",
+        "② اكتب سؤالك عن الصفقة",
+        "③ اضغط تحليل",
+        "④ استلم تقرير المستشار الذكي",
       ].map((step) => (
         <div
           key={step}
@@ -548,14 +542,18 @@ return (
     </div>
 
     <label className="upload">
-      <input type="file" accept="image/*" />
+      <input type="file" accept="image/*" onChange={onFile} />
       📈 رفع صورة الشارت
     </label>
 
-    <label className="upload" style={{ marginTop: 12 }}>
-      <input type="file" accept="image/*" />
-      💰 رفع صورة الحساب والهامش
-    </label>
+    {preview && (
+      <img
+        className="preview"
+        src={preview}
+        style={{ display: "block" }}
+        alt="chart"
+      />
+    )}
 
     <textarea
       value={question}
@@ -563,8 +561,8 @@ return (
       placeholder="مثال: هل أدخل الصفقة؟ هل أنقل وقف الخسارة؟ هل الاتجاه ما زال صالحاً؟"
     />
 
-    <button className="btn">
-      🧠 تحليل بواسطة المستشار الذكي
+    <button className="btn" onClick={analyze} disabled={loading}>
+      {loading ? "جاري التحليل..." : "🧠 تحليل بواسطة المستشار الذكي"}
     </button>
 
     <div
@@ -575,13 +573,7 @@ return (
         lineHeight: 1.9,
       }}
     >
-      🧠 تقرير المستشار الذكي{"\n\n"}
-      📊 الاتجاه العام: بانتظار رفع الشارت{"\n"}
-      💧 السيولة: بانتظار التحليل{"\n"}
-      📦 مناطق الدخول: بانتظار التحليل{"\n"}
-      🛑 وقف الخسارة: بانتظار التحليل{"\n"}
-      🎯 الأهداف: بانتظار التحليل{"\n\n"}
-      ⚠️ إدارة الصفقة: ارفع الصور واكتب سؤالك لبدء التحليل.
+      {result}
     </div>
   </section>
 )}

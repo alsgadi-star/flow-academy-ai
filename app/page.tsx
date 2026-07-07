@@ -489,18 +489,102 @@ return (
         </>
       )}
 
-      {tab === "advisor" && (
-        <section className="card">
-          <div className="card-title">
-            <div className="icon"><Brain size={23} /></div>
-            <h3>المستشار</h3>
-          </div>
-          <label className="upload"><input type="file" accept="image/*" />ارفع صورة الشارت</label>
-          <label className="upload" style={{ marginTop: 12 }}><input type="file" accept="image/*" />ارفع صورة الحساب والهامش</label>
-          <textarea value={question} onChange={(e) => setQuestion(e.target.value)} placeholder="مثال: هل أثبت الصفقة؟ هل أحرك الستوب؟" />
-          <button className="btn">اسأل المستشار</button>
-        </section>
-      )}
+ {tab === "advisor" && (
+  <section className="card">
+    <div className="card-title">
+      <div className="icon">
+        <Brain size={23} />
+      </div>
+      <h3>المستشار الذكي</h3>
+    </div>
+
+    <div
+      style={{
+        background:
+          "radial-gradient(circle at top right,rgba(20,241,149,.18),transparent 35%),linear-gradient(135deg,#04111f,#07182d)",
+        border: "1px solid #155e75",
+        borderRadius: "22px",
+        padding: "20px",
+        marginBottom: "18px",
+        boxShadow: "0 0 24px rgba(34,211,238,0.10)",
+      }}
+    >
+      <h2 style={{ color: "#22d3ee", marginBottom: 10 }}>
+        🧠 غرفة التحليل الذكي
+      </h2>
+
+      <p style={{ color: "#94a3b8", lineHeight: 1.8 }}>
+        ارفع الشارت، أضف صورة الحساب، واكتب سؤالك. سيقوم المستشار بتحليل الصفقة وفق منهج ICT و CRT مع التركيز على الاتجاه، السيولة، مناطق الدخول، وإدارة المخاطرة.
+      </p>
+    </div>
+
+    <div
+      style={{
+        display: "grid",
+        gap: "10px",
+        marginBottom: "18px",
+      }}
+    >
+      {[
+        "① ارفع صورة الشارت",
+        "② ارفع صورة الحساب والهامش",
+        "③ اكتب سؤالك عن الصفقة",
+        "④ اضغط تحليل",
+      ].map((step) => (
+        <div
+          key={step}
+          style={{
+            background: "#061225",
+            border: "1px solid #17365d",
+            borderRadius: "16px",
+            padding: "12px",
+            color: "#e5e7eb",
+            fontWeight: 700,
+          }}
+        >
+          {step}
+        </div>
+      ))}
+    </div>
+
+    <label className="upload">
+      <input type="file" accept="image/*" />
+      📈 رفع صورة الشارت
+    </label>
+
+    <label className="upload" style={{ marginTop: 12 }}>
+      <input type="file" accept="image/*" />
+      💰 رفع صورة الحساب والهامش
+    </label>
+
+    <textarea
+      value={question}
+      onChange={(e) => setQuestion(e.target.value)}
+      placeholder="مثال: هل أدخل الصفقة؟ هل أنقل وقف الخسارة؟ هل الاتجاه ما زال صالحاً؟"
+    />
+
+    <button className="btn">
+      🧠 تحليل بواسطة المستشار الذكي
+    </button>
+
+    <div
+      className="result"
+      style={{
+        marginTop: "16px",
+        whiteSpace: "pre-wrap",
+        lineHeight: 1.9,
+      }}
+    >
+      🧠 تقرير المستشار الذكي{"\n\n"}
+      📊 الاتجاه العام: بانتظار رفع الشارت{"\n"}
+      💧 السيولة: بانتظار التحليل{"\n"}
+      📦 مناطق الدخول: بانتظار التحليل{"\n"}
+      🛑 وقف الخسارة: بانتظار التحليل{"\n"}
+      🎯 الأهداف: بانتظار التحليل{"\n\n"}
+      ⚠️ إدارة الصفقة: ارفع الصور واكتب سؤالك لبدء التحليل.
+    </div>
+  </section>
+)}
 
       {tab === "signals" && (
   <SignalsPage
